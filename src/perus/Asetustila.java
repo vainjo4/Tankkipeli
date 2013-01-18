@@ -13,6 +13,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.ResourceLoader;
 
 import util.Parametrit;
 
@@ -20,8 +21,7 @@ import util.Parametrit;
  * GameState-luokka start-napin painamisen 
  * ja pelin alkamisen väliselle parametrienkysymisnäkymälle.
  * 
- * luokassa
- * Painonappi == Fullscreen-checkbox.
+ * luokassa painonappi tarkoittaa fullscreenin checkboxia.
  * 
  * @author Johannes
  *
@@ -30,6 +30,9 @@ public class Asetustila extends BasicGameState {
 
 	private int id;
 
+	/**
+	 * Apumittoja ja -koordinaatteja
+	 */
 	private int okx;
 	private int oky;
 	private int poisx;
@@ -39,31 +42,62 @@ public class Asetustila extends BasicGameState {
 	private int ruudunkorkeus;
 	private int ruudunleveys;
 
+	/**
+	 * Nappimuuttujat
+	 */
 	private Image oknappi;
 	private Image poisnappi;
 	private Image painonappi_normi;
 	private Image painonappi_pohjassa;
 
+	/**
+	 * Nappien neliöt
+	 */
 	private Rectangle oknelio;
 	private Rectangle poisnelio;
 	private Rectangle painonappinelio;
 
+	/**
+	 * Tekstikentät
+	 */
 	private TextField tankkikentta;
 	private TextField tuhokentta;
 	private TextField minimivalikentta;
 	private TextField ppmpkentta;
 
-	private int tankki_oletus = 2;
-	private int tuho_oletus = 50;
-	private int minimi_oletus = 150;
-	private int ppmp_oletus = 10;
+	/**
+	 * Oletusvakiot
+	 */
+	private final int tankki_oletus = 2;
+	private final int tuho_oletus = 50;
+	private final int minimi_oletus = 150;
+	private final int ppmp_oletus = 10;
 
-	private boolean painonappiPainettu;
-
+	private boolean painonappiPainettu;	
 	private Tausta tausta;
 
+	/**
+	 * @param id	GameStaten id-numero
+	 */
 	public Asetustila(int id) {
 		this.id = id;
+	}
+
+	private String annaEsittely() {
+		return "Tank Count\n\n" +
+				"Ammo Damage\n\n" +
+				"Minimum Tank Distance\n\n" +
+				"Pixels Per Terrain Point\n\n\n\n" +
+				"Fullscreen";
+	}
+
+	private String annaOhjeet() {
+		return "Arrow Keys: Angle and Power" +
+				"          " +
+				"ENTER: Shoot\n" +
+				"ESC: Pause Menu"+
+				"                      "+
+				"SHIFT: Faster Adjustments";
 	}
 
 	@Override
@@ -75,12 +109,13 @@ public class Asetustila extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame peli)
 			throws SlickException {
 
-		System.out.println("asetustila init"); 
+		//System.out.println("asetustila init"); 
 
 		//tallennetaan mitat muuttujiin
 		this.ruudunkorkeus = gc.getHeight();
 		this.ruudunleveys = gc.getWidth();
 
+		//kenttien asetteluun apumuuttujat
 		int kenttax = ruudunleveys/2+100;
 		int	kenttay = ruudunkorkeus/6;	
 
@@ -91,20 +126,24 @@ public class Asetustila extends BasicGameState {
 		this.tausta = new Tausta(gc);
 
 		//haetaan kuvat napeille
-		this.oknappi = new Image("res/ok.png");
-		this.poisnappi = new Image("res/mainmenu.png");
-		this.painonappi_normi = new Image("res/checkbox.png");
-		this.painonappi_pohjassa = new Image("res/checkbox_checked.png");
+		this.oknappi = new Image(
+				ResourceLoader.getResource("res/ok.png").getPath());
+		this.poisnappi = new Image(
+				ResourceLoader.getResource("res/mainmenu.png").getPath());
+		this.painonappi_normi = new Image(
+				ResourceLoader.getResource("res/checkbox.png").getPath());
+		this.painonappi_pohjassa = new Image(
+				ResourceLoader.getResource("res/checkbox_checked.png").getPath());
 
-		//asetetaan nappien x:t ja y:t
+		//asetetaan nappien x:t
 		this.okx = this.ruudunleveys/3-this.oknappi.getWidth();
 		this.poisx = (this.ruudunleveys/3)*2;
 		this.painonappix = kenttax;
 
+		//asetetaan nappien y:t
 		this.oky = this.ruudunkorkeus-this.oknappi.getHeight()-30;			
 		this.poisy = this.ruudunkorkeus-this.poisnappi.getHeight()-30;
 		this.painonappiy = kenttay+180;
-
 
 		//tehdään nappeja vastaavat neliöt hiirentarkkailua varten
 		this.oknelio = new Rectangle(
@@ -113,12 +152,14 @@ public class Asetustila extends BasicGameState {
 				this.oknappi.getWidth(), 
 				this.oknappi.getHeight());
 
+		//main menu-napille neliö
 		this.poisnelio = new Rectangle(
 				this.poisx,
 				this.poisy, 
 				this.poisnappi.getWidth(), 
 				this.poisnappi.getHeight());		
 
+		//checkboxille neliö
 		this.painonappinelio = new Rectangle(
 				this.painonappix, 
 				this.painonappiy, 
@@ -142,8 +183,8 @@ public class Asetustila extends BasicGameState {
 		if(this.ppmpkentta == null) {
 			this.ppmpkentta = new TextField(gc, fontti, 0, 0, 100,20);
 		}
-		//asetetaan oletusarvot muuttujiin
 
+		//asetetaan kentät paikoilleen
 		this.tankkikentta.setLocation(kenttax, kenttay);
 		this.tuhokentta.setLocation(kenttax, kenttay+40);
 		this.minimivalikentta.setLocation(kenttax, kenttay+80);
@@ -154,36 +195,34 @@ public class Asetustila extends BasicGameState {
 		this.tuhokentta.setText(""+this.tuho_oletus);
 		this.minimivalikentta.setText(""+this.minimi_oletus);
 		this.ppmpkentta.setText(""+this.ppmp_oletus);
-	//	this.asetaPainonappiPainettu(false);
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame peli, Graphics g)
 			throws SlickException {
 
+		//täytetään tausta
 		g.fill(this.tausta, this.tausta.annaTaustanGradient());
 
-		this.oknappi.draw(this.okx, this.oky);
-		this.poisnappi.draw(this.poisx, this.poisy);
+		//piirretään napit
+		g.drawImage(this.oknappi, this.okx, this.oky);
+		g.drawImage(this.poisnappi, this.poisx, this.poisy);
+
 
 		if(this.annaPainonappiPainettu()) {
-			this.painonappi_pohjassa.draw(this.painonappix, this.painonappiy);
+			g.drawImage(this.painonappi_pohjassa, 
+					this.painonappix, this.painonappiy);
 		}
 		else {
-			this.painonappi_normi.draw(this.painonappix, this.painonappiy);
+			g.drawImage(this.painonappi_normi, 
+					this.painonappix, this.painonappiy);
 		}
 
-		g.drawString("Tank Count\n\n" +
-				"Ammo Damage\n\n" +
-				"Minimum Tank Distance\n\n" +
-				"Pixels Per Terrain Point\n\n\n\n" +
-				"Fullscreen",
+		g.drawString(this.annaEsittely(),
 				this.ruudunleveys/2-200, this.ruudunkorkeus/6);
 
-		g.drawString("Arrow Keys: Angle and Power" +"          " +
-				"ENTER: Shoot\n" +
-				"ESC: Pause Menu"+"                      "+
-				"SHIFT: Faster Adjustments", this.ruudunleveys/2-300, this.ruudunkorkeus/3*2-20);
+		g.drawString(this.annaOhjeet(), 
+				this.ruudunleveys/2-300, this.ruudunkorkeus/3*2-20);
 
 		this.tankkikentta.render(gc, g);
 		this.tuhokentta.render(gc, g);
@@ -199,44 +238,59 @@ public class Asetustila extends BasicGameState {
 		int mouseX = input.getMouseX();
 		int mouseY = input.getMouseY();
 
+		//napinpainaminen.
+
 		if(this.oknelio.contains(mouseX, mouseY) 
 				&& input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 
 			this.oknappiPainettu(gc, peli);
-			
+
 		}
 		else if(this.poisnelio.contains(mouseX, mouseY) && 
 				input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 
 			this.poisnappiPainettu(gc, peli);
 		}
-		
+
 		else if(this.painonappinelio.contains(mouseX, mouseY) && 
 				input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			
+
 			asetaPainonappiPainettu(!annaPainonappiPainettu());
 		}
 
 	}
-	
+	/**
+	 * Suorittaa main menu-nappia painettaessa tapahtuvat asiat.
+	 * @param gc	pelin GameContainer
+	 * @param peli	Peli-olio
+	 * @throws SlickException
+	 */
 	private void poisnappiPainettu(GameContainer gc, StateBasedGame peli) 
 			throws SlickException {
 		this.leave(gc, peli);
 		peli.enterState(Peli.VALIKKOTILA);
-		
+
 	}
 
+	/**
+	 * Suorittaa ok-nappia painettaessa tapahtuvat asiat.
+	 * @param gc	pelin GameContainer
+	 * @param peli	Peli-olio
+	 * @throws SlickException
+	 */
 	private void oknappiPainettu(GameContainer gc, StateBasedGame peli) 
 			throws SlickException {
-		 
+
 		luoJaLahetaParametrit(gc, peli);
 
 		if(gc instanceof AppGameContainer) {
 			if(annaPainonappiPainettu()) {
-
-				((AppGameContainer) gc).setDisplayMode(gc.getScreenWidth(), gc.getScreenHeight(), true);
+				//fullscreen.
+				((AppGameContainer) gc).setDisplayMode(
+						gc.getScreenWidth(), 
+						gc.getScreenHeight(), true);
+				
 				gc.reinit();
-
 
 			}
 			else if(!annaPainonappiPainettu()
@@ -249,11 +303,11 @@ public class Asetustila extends BasicGameState {
 		}
 		this.leave(gc, peli);
 		peli.enterState(Peli.PELITILA);
-		
+
 	}
 
 	/**
-	 * asetusmetodi
+	 * Asetusmetodi.
 	 * @param onko	uusi tila
 	 */
 	private void asetaPainonappiPainettu(boolean onko) {
@@ -261,7 +315,7 @@ public class Asetustila extends BasicGameState {
 	}
 	/**
 	 * 
-	 * @return	painonappiPainettu arvo
+	 * @return	painonappiPainettu-arvo
 	 */
 	private boolean annaPainonappiPainettu() {
 		return this.painonappiPainettu;
@@ -269,47 +323,41 @@ public class Asetustila extends BasicGameState {
 
 	/**
 	 * 
-	 * @param gc
-	 * @param peli
+	 * @param gc	pelin GameContainer
+	 * @param peli	peli itse
 	 * @throws SlickException
 	 */
 	private void luoJaLahetaParametrit(GameContainer gc, StateBasedGame peli) 
 			throws SlickException {
-		System.out.println("luoJaLahetaParametrit");
-		//oletusarvot muuttujiin, jos parseint epäonnistuu
-		int tankkimaara;// = this.tankki_oletus; 
-		int ammustuho;// = this.tuho_oletus;
-		int minimivali;// = this.minimi_oletus;
-		int ppmp;// = this.ppmp_oletus;
 
+		//System.out.println("luoJaLahetaParametrit");
+
+
+		//oletusarvot muuttujiin, jos parseInt epäonnistuu
+		int tankkimaara = this.tankki_oletus; 
+		int ammustuho = this.tuho_oletus;
+		int minimivali = this.minimi_oletus;
+		int ppmp = this.ppmp_oletus;
 
 		try {
-		//	System.out.println("111");
-
 			tankkimaara = Integer.parseInt(this.tankkikentta.getText());
 			ammustuho = Integer.parseInt(this.tuhokentta.getText());
 			minimivali = Integer.parseInt(this.minimivalikentta.getText());	
 			ppmp = Integer.parseInt(this.ppmpkentta.getText());
-
-		//	System.out.println("222");
 		}
 		catch(NumberFormatException ex) {
-			
 			System.err.println("laiton syöte *******************************");
-
-			tankkimaara = this.tankki_oletus; 
-			ammustuho = this.tuho_oletus;
-			minimivali = this.minimi_oletus;
-			ppmp = this.ppmp_oletus;
 		}
 
+		/*
 		System.out.println("tankki "+tankkimaara +
 				" tuho "+ ammustuho +
 				" minimi "+ minimivali +
 				" ppmp "+ ppmp);
+		 */
 
-		tankkimaara = tankkiTarkastus(tankkimaara);
-		minimivali = valiTarkastus(gc, tankkimaara, minimivali);
+		tankkimaara = this.tankkiTarkastus(tankkimaara);
+		minimivali = this.minimiValiTarkastus(gc, tankkimaara, minimivali);
 
 		((Pelitila)peli.getState(Peli.PELITILA)).init(gc, peli, new Parametrit(tankkimaara, ammustuho, minimivali, ppmp));
 	}
@@ -334,7 +382,7 @@ public class Asetustila extends BasicGameState {
 	 * @param minimivali 	tankkien väliin minimissään tuleva pikselimäärä
 	 * @return laillinen minimivalin arvo
 	 */
-	private int valiTarkastus(GameContainer gc, int tankkimaara, int minimivali) {
+	private int minimiValiTarkastus(GameContainer gc, int tankkimaara, int minimivali) {
 		if(minimivali < 1) {
 			minimivali = 1;
 		}

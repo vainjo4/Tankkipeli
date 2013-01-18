@@ -13,6 +13,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.ResourceLoader;
 
 /**
  * GameState-luokka pausevalikkoa varten.
@@ -20,100 +21,138 @@ import org.newdawn.slick.state.StateBasedGame;
  *
  */
 public class Pausetila extends BasicGameState {
-		
-	private static Shape maasto;
-	
-	private Image eteennappi;
-	private Image taaksenappi;
-	
-	private Rectangle eteennelio;
-	private Rectangle taaksenelio;
-	
-	private Rectangle ruutu;
+
 	private int id;
 
+	private static Shape maasto;
+
+	/**
+	 * nappien kuvat
+	 */
+	private Image eteennappi;
+	private Image taaksenappi;
+
+	/**
+	 * nappien neliöt
+	 */
+	private Rectangle eteennelio;
+	private Rectangle taaksenelio;
+
+	/**
+	 * valikkoruutu
+	 */
+	private Rectangle ruutu;
+
+	/**
+	 * apumittoja ja -koordinaatteja
+	 */
 	private int eteenx;
 	private int eteeny;
 	private int taaksex;
 	private int taaksey;
-	
 	private int ruudunkorkeus;
 	private int ruudunleveys;
+	
 	private Tausta tausta;
-	
+
 	public Pausetila(int id) {
-	this.id = id;
-		
+		this.id = id;
+
 	}
-	
-	
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame peli)
 			throws SlickException {
-
+		
+		//alustetaan mitat apumuuttujiin
 		this.ruudunkorkeus = gc.getHeight();
 		this.ruudunleveys = gc.getWidth();
-		
+
+		//alustetaan valikkoruutu
 		this.ruutu = new Rectangle(
 				ruudunleveys/3, 
 				ruudunkorkeus/3, 
 				ruudunleveys/3, 
 				ruudunkorkeus/3);
-		
-		this.eteennappi = new Image("res/smallmainmenu.png");
-		this.taaksenappi = new Image("res/smallback.png");
-		
+
+		//alustetaan napit
+		this.eteennappi = new Image(
+				ResourceLoader.getResource("res/smallmainmenu.png").getPath());
+		this.taaksenappi = new Image(
+				ResourceLoader.getResource("res/smallback.png").getPath());
+
+		//alustetaan x:t
 		this.eteenx = this.ruudunleveys/2-this.eteennappi.getWidth()/2;
 		this.taaksex = this.ruudunleveys/2-this.taaksenappi.getWidth()/2;
-		
+
+		//alustetaan y:t
 		this.eteeny = this.ruudunkorkeus/2-this.eteennappi.getHeight()*3/4;
 		this.taaksey = this.ruudunkorkeus/2+this.taaksenappi.getHeight()/2;	
+
+		//alustetaan neliöt
+		this.eteennelio = new Rectangle(
+				this.eteenx,
+				this.eteeny,
+				this.eteennappi.getWidth(),
+				this.eteennappi.getHeight());
 		
-		this.eteennelio = new Rectangle(this.eteenx, this.eteeny, this.eteennappi.getWidth(), this.eteennappi.getHeight());
-		this.taaksenelio = new Rectangle(this.taaksex, this.taaksey, this.taaksenappi.getWidth(), this.taaksenappi.getHeight());
-		
+		this.taaksenelio = new Rectangle(
+				this.taaksex, 
+				this.taaksey,
+				this.taaksenappi.getWidth(), 
+				this.taaksenappi.getHeight());
+
+		//alustetaan tausta
 		this.tausta = new Tausta(gc);
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame peli, Graphics g)
 			throws SlickException {
+
+		//piirretään tausta
+		g.fill(this.tausta, this.tausta.annaTaustanGradient());
+
+		//piirretään maasto
+		if(Pausetila.maasto instanceof Maasto) {
+		g.fill(Pausetila.maasto, ((Maasto) Pausetila.maasto).annaMaastonGradient());
+		}
 		
-			g.fill(this.tausta, this.tausta.annaTaustanGradient());
-		
-			g.fill(Pausetila.maasto, ((Maasto) Pausetila.maasto).annaMaastonGradient());
-			
-			g.fill(ruutu, new GradientFill(
-					0, this.ruutu.getMinY(), new Color(200, 200, 200),
-					gc.getWidth(), gc.getHeight(), new Color(0,0,0)));
-			
-			this.eteennappi.draw(eteenx, eteeny);
-			this.taaksenappi.draw(taaksex, taaksey);
-			g.drawString("PAUSED",
-					this.ruudunleveys/2-30, 
-					this.ruudunkorkeus/2-this.eteennappi.getHeight()*4/3);
-		
+		//piirretään valikkoruutu
+		g.fill(this.ruutu, new GradientFill(
+				0, this.ruutu.getMinY(), new Color(200, 200, 200),
+				gc.getWidth(), gc.getHeight(), new Color(0,0,0)));
+
+		//piirretään napit
+		g.drawImage(this.eteennappi, eteenx, eteeny);
+		g.drawImage(this.taaksenappi, taaksex, taaksey);
+
+		//piirretään PAUSED-teksti
+		g.drawString("PAUSED",
+				this.ruudunleveys/2-30, 
+				this.ruudunkorkeus/2-this.eteennappi.getHeight()*4/3);
+
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame peli, int delta)
 			throws SlickException {
-		
+
 		Input input = gc.getInput();
 		int mouseX = input.getMouseX();
 		int mouseY = input.getMouseY();
-		
+
+		//nappeja voi painaa.
 		if(this.eteennelio.contains(mouseX, mouseY) 
 				&& input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			
+
 			this.leave(gc, peli);
-			
+
 			peli.enterState(Peli.VALIKKOTILA);	
 		}
 		else if(this.taaksenelio.contains(mouseX, mouseY) 
 				&& input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			
+
 			this.leave(gc, peli);
 			peli.enterState(Peli.PELITILA);	
 		}
@@ -126,8 +165,8 @@ public class Pausetila extends BasicGameState {
 
 	/**
 	 * Kutsutaan Pelitilassa esciä painettaessa. Staattinen, 
-	 * koska Pelitilalla ei viittausta Pausetilaan ja Slick-metodit eivät 
-	 * @param maasto	Maasto, jonka Pausetila laittaa parametrikseen.
+	 * koska Pelitilalla ei viittausta Pausetilaan.
+	 * @param maasto	Maasto, jonka Pausetila tallettaa.
 	 */
 	public static void otaMaasto(Shape maasto) {
 		Pausetila.maasto = maasto;

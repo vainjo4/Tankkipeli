@@ -10,6 +10,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.ResourceLoader;
 
 import aktiivit.Tankki;
 
@@ -23,58 +24,71 @@ import util.Satunnaisuus;
 public class Valikkotila extends BasicGameState {
 
 	private int id;
-
+	
+	/**
+	 * apumitat ja -koordinaatit
+	 */
 	private int napinleveys;
 	private int napinkorkeus;
-
 	private int valikonx;
-
 	private int aloitay;
 	private int creditsy;
 	private int lopetay;
 
+	/**
+	 * napit
+	 */
 	private Image aloitanappi;
 	private Image creditsnappi;
 	private Image lopetanappi;
 	private Image otsikko;
 
+	/**
+	 * nappien neliöt
+	 */
 	private Rectangle aloitanelio;
 	private Rectangle creditsnelio;
 	private Rectangle lopetanelio;
 
 	private Tausta tausta;
 	private Maasto maasto;
-
 	private Tankki tankki;
 
-
-
-
+	/**
+	 * 
+	 * @param id	GameStaten id-numero
+	 */
 	public Valikkotila(int id) {
 		this.id = id;
 	}
-
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame peli)
 			throws SlickException {
 
-		this.aloitanappi = new Image("res/start.png");
-		this.creditsnappi = new Image("res/credits.png");
-		this.lopetanappi = new Image("res/quit.png");
-		this.otsikko = new Image("res/Menutitle_green_blur2.png");
+		//ladataan kuvat
+		this.aloitanappi = new Image(
+				(ResourceLoader.getResource("res/start.png").getPath()));
+		this.creditsnappi = new Image(
+				(ResourceLoader.getResource("res/credits.png").getPath()));
+		this.lopetanappi = new Image(
+				(ResourceLoader.getResource("res/quit.png").getPath()));
+		this.otsikko = new Image(
+				(ResourceLoader.getResource("res/menutitle_green_blur2.png").getPath()));
 
-		//samankokoiset napit
+		//kaikki napit samankokoisia
 		this.napinleveys = this.aloitanappi.getWidth();
 		this.napinkorkeus = this.aloitanappi.getHeight();
 
-		//napeilla sama x-arvo
+		//kaikilla napeilla sama x-arvo
 		valikonx = gc.getWidth()/2-this.napinleveys/2;
 
+		//napit kiinni toisiinsa
 		aloitay = gc.getHeight()/2-this.napinkorkeus/2;
 		creditsy = gc.getHeight()/2+this.napinkorkeus/2;
 		lopetay = gc.getHeight()/2+this.napinkorkeus/2*3;
 
+		//hiirentarkkailuneliöt
 		this.aloitanelio = new Rectangle(
 				this.valikonx, 
 				this.aloitay, 
@@ -94,30 +108,36 @@ public class Valikkotila extends BasicGameState {
 				this.napinleveys, 
 				this.napinkorkeus);
 
+		//tehdään maisemaksi satunnainen maasto
 		this.maasto = new Maasto(gc, Satunnaisuus.annaInt(10)+10);
+
+		//normaali tausta
 		this.tausta = new Tausta(gc);
 
+		//alustetaan ja sijoitetaan koristetankki 
 		this.tankki = new Tankki(gc);
 		this.tankki.asetaX(gc.getWidth()/6);
-		this.tankki.asetaY(this.tankki.laskeY(this.maasto));
-		
+		this.tankki.asetaY(this.tankki.laskeYmaastoon(this.maasto));
+
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame peli, Graphics g)
 			throws SlickException {
 
+		//piirretään taustat ja maastot
 		g.fill(this.tausta, this.tausta.annaTaustanGradient());
 		g.fill(this.maasto, this.maasto.annaMaastonGradient());
 
-		this.aloitanappi.draw(valikonx, aloitay);
-		this.creditsnappi.draw(valikonx, creditsy);
-		this.lopetanappi.draw(valikonx, lopetay);
+		//piirretään napit
+		g.drawImage(this.aloitanappi, valikonx, aloitay);
+		g.drawImage(this.creditsnappi, valikonx, creditsy);
+		g.drawImage(this.lopetanappi, valikonx, lopetay);
 
+		//piirretään otsikko ja koristetankki
 		this.otsikko.drawCentered(gc.getWidth()/2, gc.getHeight()/6);
 
-
-		this.tankki.draw(this.tankki.annaX()-(this.tankki.getWidth()/2), 
+		g.drawImage(this.tankki, this.tankki.annaX()-(this.tankki.getWidth()/2), 
 				this.tankki.annaY()-this.tankki.getHeight());
 	}
 
@@ -128,6 +148,8 @@ public class Valikkotila extends BasicGameState {
 		Input input = gc.getInput();
 		int mouseX = input.getMouseX();
 		int mouseY = input.getMouseY();
+
+		//nappienpainamissetti
 
 		if(this.aloitanelio.contains(mouseX, mouseY) 
 				&& input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
@@ -147,7 +169,12 @@ public class Valikkotila extends BasicGameState {
 			this.lopetusnappiPainettu(gc);
 		}
 	}
-
+	/**
+	 * Menee Creditstilaan
+	 * @param gc	pelin GameContainer
+	 * @param peli	peli itse
+	 * @throws SlickException
+	 */
 	private void creditsnappiPainettu(GameContainer gc, StateBasedGame peli) 
 			throws SlickException {
 
@@ -155,7 +182,12 @@ public class Valikkotila extends BasicGameState {
 		peli.enterState(Peli.CREDITSTILA);
 	}
 
-
+	/**
+	 * Menee Asetustilaan
+	 * @param gc	pelin GameContainer
+	 * @param peli	peli itse
+	 * @throws SlickException
+	 */
 	private void aloitusnappiPainettu(GameContainer gc, StateBasedGame peli) 
 			throws SlickException {
 
@@ -163,7 +195,10 @@ public class Valikkotila extends BasicGameState {
 		peli.enterState(Peli.ASETUSTILA);
 
 	}
-
+	/**
+	 * Lopettaa pelin
+	 * @param gc	pelin GameContainer
+	 */
 	private void lopetusnappiPainettu(GameContainer gc) {
 		gc.exit();
 	}

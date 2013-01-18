@@ -4,6 +4,11 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
+/**
+ * 
+ * @author Johannes
+ *
+ */
 public class Musiikki implements Runnable {
 
 	private static Music musiikki;

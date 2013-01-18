@@ -9,22 +9,28 @@ public class Kivi extends Rectangle {
 	private int y;
 
 	/**
-	 * Pikselivakio määrää neliöiden koon
+	 * Kivien koko kovakoodattu 3*3
 	 * @param x
 	 * @param y
 	 */
 	public Kivi(int x, int y) {
-		super(x,y,Kivikko.PIKSELIVAKIO,Kivikko.PIKSELIVAKIO);
+		super(x,y,3,3);
 
 		this.x = x;
 		this.y = y;
-		
-		//System.out.println("luotu kivi x: " +x+ " y: "+y);
-	}
 
+	}
+	/**
+	 * Antaa x: n
+	 * @return	x
+	 */
 	public int annaX() {
 		return this.x;
 	}
+	/**
+	 * Antaa y:n
+	 * @return	y
+	 */
 	public int annaY() {
 		return this.y;
 	}

@@ -9,14 +9,12 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.util.ResourceLoader;
 
-import aktiivit.Piippu;
 import aktiivit.Tankki;
 
 public class Creditstila extends BasicGameState {
-
 
 	private int id;
 	private Tausta tausta;
@@ -27,6 +25,10 @@ public class Creditstila extends BasicGameState {
 	
 	private Tankki tankki;
 
+	/**
+	 * 
+	 * @param id	GameStaten id-numero
+	 */
 	public Creditstila(int id) {
 		this.id = id;
 	}
@@ -35,19 +37,24 @@ public class Creditstila extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame peli)
 			throws SlickException {
 		
-		this.nappi = new Image("res/mainmenu.png");
+		//ladataan kuva
+		this.nappi = new Image(ResourceLoader.getResource("res/mainmenu.png").getPath());
 		
+		//napin koordinaatit
 		this.nappix = gc.getWidth()/2-nappi.getWidth()/2;
 		this.nappiy = gc.getHeight()-nappi.getHeight()-30;
 		
+		//napin hiirineliö
 		this.nappinelio = new Rectangle(
 				nappix, 
 				nappiy, 
 				nappi.getWidth(), 
 				nappi.getHeight());
 		
+		//tankiksi koristetankki
 		this.tankki = new Tankki(gc);
-		//this.tankki.annaPiippu().setRotation(45);
+		
+		//tausta kuten yleensä
 		this.tausta = new Tausta(gc);
 	}
 
@@ -56,10 +63,10 @@ public class Creditstila extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame peli, Graphics g)
 			throws SlickException {
 
+		//piirretään tausta
 		g.fill(this.tausta, this.tausta.annaTaustanGradient());
 		
-	//	Piippu piippu = this.tankki.annaPiippu();
-		
+		//piirretään tankki
 		g.drawImage(this.tankki, 
 				this.tankki.annaX()-(this.tankki.getWidth()/2), 
 				this.tankki.annaY()-this.tankki.getHeight());
@@ -74,9 +81,8 @@ public class Creditstila extends BasicGameState {
 		
 		g.drawString(annaKrediittiString(gc), gc.getWidth()/2-125, gc.getHeight()/8);
 		
-		this.nappi.draw(this.nappix, this.nappiy);
+		g.drawImage(this.nappi, this.nappix, this.nappiy);
 		
-		Tankki vaunu = this.tankki;
 		/*
 		g.draw(new Rectangle(vaunu.annaX()-(vaunu.getWidth()/2),
 				vaunu.annaY()-vaunu.getHeight(), 3,3));

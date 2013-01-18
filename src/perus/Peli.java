@@ -20,6 +20,7 @@ import util.Musiikki;
  * 
  * update()-metodissa päivitetään pelin logiikka.
  * 
+ * 
  * Renderiä ja updatea kutsutaan pelisilmukassa toistuvasti. 
  * Renderiä kutsutaan joka framella eli ruudunpäivityksellä 
  * ja updatea jonkin verran tätä harvemmin tai useammin 
@@ -64,7 +65,6 @@ public class Peli extends StateBasedGame {
     public static final int CREDITSTILA = 4;
  
 /**
- * 
  * @throws SlickException
  */
 	public Peli() throws SlickException  {

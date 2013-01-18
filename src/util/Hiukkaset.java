@@ -22,17 +22,7 @@ public class Hiukkaset {
 			e.printStackTrace();
 		}
 	}
-	
-	/*
-	public ConfigurableEmitter annaEmitteri() {
-		try {
-			return ParticleIO.loadEmitter(new File("smoke.xml"));
-		} catch (IOException e) {
-			return null;
 
-		}
-	}
-	 */
 	public ParticleSystem annaRajahdys() {
 		return this.rajahdys;
 

@@ -1,6 +1,8 @@
 package util;
 import java.util.Random;
 
+import org.newdawn.slick.GameContainer;
+
 /**
  * Luokka, jossa pelin tarvitsemaa satunnaisuutta
  * @author Johannes
@@ -18,6 +20,16 @@ public class Satunnaisuus {
 	public static int annaInt(int mihinAsti) {
 		return kone.nextInt(mihinAsti);
 	}
+	
+	/**
+	 * Arpoo ikkunan leveyttä pienemmän luvun
+	 * @param gc	pelin GameContainer
+	 * @return satunnaisluku
+	 */
+	public static int arvoIkkunastaX(GameContainer gc) {
+		return Satunnaisuus.annaInt(gc.getWidth());
+	}
+	
 	
 	/**
 	 * Muodostaa taulukon jonka arvot on satunnaisesta kahdesti tasoitettuja. 

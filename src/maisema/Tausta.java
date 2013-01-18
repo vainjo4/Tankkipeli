@@ -5,7 +5,8 @@ import org.newdawn.slick.fills.GradientFill;
 import org.newdawn.slick.geom.Rectangle;
 
 /**
- * 
+ * Neliön alaluokka. Muodostaa peli-ikkunan kokoisen neliön. 
+ * Taustan ja GradientFillin avulla peli piirtää taivaan.
  * @author Johannes
  *
  */
@@ -23,6 +24,10 @@ public class Tausta extends Rectangle {
 	}
 	public GradientFill annaTaustanGradient() {
 		return this.taustaGradient;
+	}
+	
+	public Tausta annaTausta() {
+		return this;
 	}
 
 }

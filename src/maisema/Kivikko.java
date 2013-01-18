@@ -1,75 +1,114 @@
 package maisema;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 
+
+/**
+ * Luokka, joka huolehtii Kivistä.
+ * 
+ * Kivien koko on kautta ohjelman kovakoodattu olemaan 3*3.
+ * Yritin Pikselivakion käyttöä, mutta suuren läpikäymisurakan
+ * (mm. Pelitilan update-metodi) vuoksi lisäoperaatiot aiheuttivat 
+ * melkoisen rasitteen laskentateholle.
+ * 
+ * @author Johannes
+ */
 public class Kivikko {
 
-	public static final int PIKSELIVAKIO = 3; 
-
-	private Shape maasto;
 	private Kivi[][] kivitaulu;
 
+	/**
+	 * Luo Kivikon Maaston mukaan.
+	 * @param gc	pelin GameContainer.
+	 * @param maasto	Maasto jonka mukaan tehdään.
+	 */
 	public Kivikko(GameContainer gc, Shape maasto) {
-		this.maasto = maasto;
+
 
 		int leveys = gc.getWidth();
 		int korkeus = gc.getHeight();
 
 		this.kivitaulu = new Kivi[leveys][korkeus];
-
-		System.out.println("neliötaulun korkeus: "+annaKorkeus() + " leveys :" + annaLeveys());
-
-		this.teeKivikko(gc, leveys, korkeus);
-
+		this.teeKivikko(gc, leveys, korkeus, maasto);
 	}
 	/**
-	 * 
-	 * @param gc
-	 * @param leveys
-	 * @param korkeus
+	 * Täyttää Kivikon Kivillä.
+	 * @param gc pelin GameContainer
+	 * @param leveys	taulukon leveys
+	 * @param korkeus	taulukon korkeus
+	 * @param maasto	Maasto, jonka mukaan Kivikko tehdään
 	 */
-	public void teeKivikko(GameContainer gc, int leveys, int korkeus) {
-		int y;
+	public void teeKivikko(GameContainer gc, int leveys, 
+			int korkeus, Shape maasto) {
+		//3 on neliön sivun pituus
 		int x = 0;
 		while (x < leveys) {
 
-			y = 0;
+			int y = 0;
 			while (y < korkeus) {
 
-				if(this.maasto.contains(x,y)) {
+				if(maasto.contains(x,y)) {
 					this.kivitaulu[x][y] = new Kivi(x,y);
 				}
-				y = y+PIKSELIVAKIO;
+				y = y+3;
 			}
-			x = x+PIKSELIVAKIO;
+			x = x+3;
 		}
 	}
 
+	/**
+	 * Antaa Kiven koordinaattien perusteella.
+	 * @param x	annettavan x-koordinaatti
+	 * @param y	annettavan y-koordinaatti
+	 * @return Kivi koordinaateissa
+	 */
 	public Kivi annaTaulukosta(int x, int y) {
 		return this.kivitaulu[x][y];
 	}
-	
+
+	/**
+	 * Poistaa taulukosta Kiven.
+	 * @param x	poistettavan x-koordinaatti
+	 * @param y	poistettavan y-koordinaatti
+	 */
 	public void poistaTaulukosta(int x, int y) {
+		//ehto ei salli kivien poistamista aivan alareunasta
 		if(y < this.annaKorkeus()-10) {
 			this.kivitaulu[x][y] = null;
 		}
 	}
+
+	/**
+	 * Lisää taulukkoon Kiven
+	 * @param x	lisättävän x-koordinaatti
+	 * @param y	lisättävän y-koordinaatti
+	 */
 	public void lisaaTaulukkoon(int x, int y) {
 		this.kivitaulu[x][y] = new Kivi(x,y);	
 	}
-
+	/**
+	 * Antaa taulukon korkeuden.
+	 * @return	taulukon y-suuntainen pituus
+	 */
 	public int annaKorkeus() {
 		return this.kivitaulu[0].length;
 	}
-
+	/**
+	 * Antaa taulukon leveyden.
+	 * @return	taulukon x-suuntainen pituus
+	 */
 	public int annaLeveys() {
 		return this.kivitaulu.length;
 	}
 
-	public void teeKivikkoonKolo(Circle reika, GameContainer gc) {
-		
+	/**
+	 * Tekee Kivikkoon reika-muotoisen reiän. 
+	 * @param reika	poistettava muoto
+	 * @param gc	pelin GameContainer
+	 */
+	public void teeKivikkoonKolo(Shape reika, GameContainer gc) {
+
 		int leveys = this.annaLeveys();
 		int korkeus = this.annaKorkeus();
 
@@ -81,15 +120,18 @@ public class Kivikko {
 				if (this.annaTaulukosta(x,y) != null 
 						&& reika.intersects(this.annaTaulukosta(x,y))) {
 					this.poistaTaulukosta(x,y);
-					System.out.println("poisto");
-
 				}
 				y++;
 			}
 			x++;
 		}
 	}
-	
+	/**
+	 * Poistaa ja lisää kiviä siten, 
+	 * että y-suuntaiset taulukot ovat yhtenäisiä,
+	 * eli "tiputtaa" kiviä.
+	 * @param gc pelin GameContainer
+	 */
 	public void tiputaKivia(GameContainer gc) {
 		//loopit aloittavat alhaalta jotta toimii kerralla.
 
@@ -102,11 +144,11 @@ public class Kivikko {
 			y = this.annaKorkeus()-4;
 			while(y >= 0) {
 
-				//+3 on kovakoodattu pikselivakio
+				//+3 on neliön sivun pituus
 				if(this.annaTaulukosta(x,y) != null 
 						&& this.annaTaulukosta(x,y+3) == null) {
 
-					//tämä silmukka tiputtaa pystyrivin kaikki kivet kerralla
+					//silmukka tiputtaa pystyrivin kaikki kivet kerralla
 					uusiY = y;
 					if(uusiY < this.annaKorkeus()-10) {
 						while(this.annaTaulukosta(x,uusiY+3) == null) {
@@ -121,5 +163,4 @@ public class Kivikko {
 			x--;
 		}
 	}
-
 }

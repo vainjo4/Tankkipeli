@@ -46,7 +46,7 @@ public class Maasto extends Polygon {
 		}
 	}
 	/**
-	 * Konstruktori, jolla luodaan 
+	 * Konstruktori, jolla luodaan kivikon mukaan muotoutuva maasto
 	 * @param gc
 	 * @param kivikko
 	 */

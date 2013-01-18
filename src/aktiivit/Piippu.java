@@ -2,39 +2,40 @@ package aktiivit;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.util.ResourceLoader;
 
-
+/**
+ * Tankin liikkuva osa, joka osoittaa sinne minne tankki tähtää.
+ * @author Johannes
+ */
 public class Piippu extends Image {
 
-	
 	private Tankki tankki;
 	
-	
-	public Piippu(Tankki tankki) throws SlickException {
-	super("res/piippu.png");
-	//this.setCenterOfRotation(this.width/2, BOTTOM_LEFT+this.width/2);
-	this.tankki = tankki;
-	
-	System.out.println("piippu luotu & sijoitettu");
-	
-	
-	}
 	/**
-	 * double koska vain printissä
-	 * @return
+	 * Luo piipun.
+	 * @param tankki 	Tankki, jolle piippu kuuluu
+	 * @throws SlickException
+	 */
+	public Piippu(Tankki tankki) throws SlickException {
+	super(new Image (ResourceLoader.getResource("res/barrel.png").getPath()));
+
+	this.tankki = tankki;
+	}
+	
+	/**
+	 * Antaa piipun kiertymän vain muutaman numeron tarkkuudella  
+	 * @return pyöristetty kiertymä
 	 */
 	public double annaPyoristettyKulma() {
 		return (Math.floor(Math.abs(this.getRotation()*100)))/100;
 	}
 	
-	public void sijoitaPiippu(Tankki tankki) {
-	
-		this.tankki = tankki;
-	}
-
 	/**
-	 * En tiedä miksi, mutta ilman getCenterOfRotation-kutsuja 
-	 * tämä ei toimi. Slickin bugi.
+	 * Asettaa piipun kiertoakselin. En tiedä miksi, 
+	 * mutta ilman getCenterOfRotation-kutsuja tämä ei 
+	 * toimi. 
+	 * Todennäköisesti Slickin bugi.
 	 */
 	public void asetaSarana() {
 		
@@ -42,16 +43,18 @@ public class Piippu extends Image {
 		this.getCenterOfRotationY();
 		setCenterOfRotation(10, 20);
 	}
-	
+	/**
+	 * Antaa piipun x:n.
+	 * @return piipun x
+	 */
 	public int annaX() {
 		return tankki.annaX()-10;
 	}
+	/**
+	 * Antaa piipun y:n
+	 * @return	piipun y
+	 */
 	public int annaY() {
 		return tankki.annaY()-30;
 	}
-
-	public static void main(String[] args) {
-	
-	}
-
 }
