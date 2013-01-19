@@ -39,7 +39,8 @@ public class Maasto extends Polygon {
 
 		this.addPoint(ikkunanleveys, ikkunankorkeus);
 		this.addPoint(0, ikkunankorkeus);
-		System.out.println("maastossa pisteitä " + this.getPointCount());
+		
+		//System.out.println("maastossa pisteitä " + this.getPointCount());
 
 		if(this.maastoGradient == null) {
 			teeGradient(gc);

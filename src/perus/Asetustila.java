@@ -21,7 +21,7 @@ import util.Parametrit;
  * GameState-luokka start-napin painamisen 
  * ja pelin alkamisen väliselle parametrienkysymisnäkymälle.
  * 
- * luokassa painonappi tarkoittaa fullscreenin checkboxia.
+ * Luokassa "painonappi" tarkoittaa fullscreenin checkboxia.
  * 
  * @author Johannes
  *
@@ -105,6 +105,42 @@ public class Asetustila extends BasicGameState {
 		return this.id;
 	}
 
+	/**
+	 * laillisuustarkastus
+	 * @param tankkimaara 	tankkien määrä
+	 * @return laillinen tankkimaaran arvo
+	 */
+	private int tankkiTarkastus(int tankkimaara) {
+		if(tankkimaara > 12) {
+			tankkimaara = 12;
+		}
+		else if(tankkimaara < 2) {
+			tankkimaara = 2;
+		}
+		return tankkimaara;
+	}
+	
+	/**
+	 * laillisuustarkastus
+	 * @param gc	pelin GameContainer
+	 * @param tankkimaara	tankkien määrä
+	 * @param minimivali 	tankkien väliin minimissään tuleva x-suuntainen pikselimäärä
+	 * @return laillinen minimivalin arvo
+	 */
+	private int minimiValiTarkastus(GameContainer gc, int tankkimaara, int minimivali) {
+		if(minimivali < 1) {
+			minimivali = 1;
+		}
+
+		//varmuuden vuoksi *2.5 vaikka *2 olisi teoriassa maksimi
+		float vietyTila = minimivali * tankkimaara * 5 / 2;
+
+		if(vietyTila > gc.getWidth()) {
+			minimivali = Math.round(gc.getWidth()/(tankkimaara * 5 / 2));
+		}
+		return minimivali;
+	}
+	
 	@Override
 	public void init(GameContainer gc, StateBasedGame peli)
 			throws SlickException {
@@ -208,7 +244,7 @@ public class Asetustila extends BasicGameState {
 		g.drawImage(this.oknappi, this.okx, this.oky);
 		g.drawImage(this.poisnappi, this.poisx, this.poisy);
 
-
+		//valitaan kumpi kuva piirretään
 		if(this.annaPainonappiPainettu()) {
 			g.drawImage(this.painonappi_pohjassa, 
 					this.painonappix, this.painonappiy);
@@ -218,12 +254,14 @@ public class Asetustila extends BasicGameState {
 					this.painonappix, this.painonappiy);
 		}
 
+		//piirretään tekstit
 		g.drawString(this.annaEsittely(),
 				this.ruudunleveys/2-200, this.ruudunkorkeus/6);
 
 		g.drawString(this.annaOhjeet(), 
 				this.ruudunleveys/2-300, this.ruudunkorkeus/3*2-20);
 
+		//piirretään tekstikentät
 		this.tankkikentta.render(gc, g);
 		this.tuhokentta.render(gc, g);
 		this.minimivalikentta.render(gc, g);
@@ -239,7 +277,6 @@ public class Asetustila extends BasicGameState {
 		int mouseY = input.getMouseY();
 
 		//napinpainaminen.
-
 		if(this.oknelio.contains(mouseX, mouseY) 
 				&& input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 
@@ -255,9 +292,9 @@ public class Asetustila extends BasicGameState {
 		else if(this.painonappinelio.contains(mouseX, mouseY) && 
 				input.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
 
-			asetaPainonappiPainettu(!annaPainonappiPainettu());
+			//vaihtaa toiseksi
+			this.asetaPainonappiPainettu(!this.annaPainonappiPainettu());
 		}
-
 	}
 	/**
 	 * Suorittaa main menu-nappia painettaessa tapahtuvat asiat.
@@ -361,38 +398,5 @@ public class Asetustila extends BasicGameState {
 
 		((Pelitila)peli.getState(Peli.PELITILA)).init(gc, peli, new Parametrit(tankkimaara, ammustuho, minimivali, ppmp));
 	}
-	/**
-	 * laillisuustarkastus
-	 * @param tankkimaara 	tankkien määrä
-	 * @return laillinen tankkimaaran arvo
-	 */
-	private int tankkiTarkastus(int tankkimaara) {
-		if(tankkimaara > 12) {
-			tankkimaara = 12;
-		}
-		else if(tankkimaara < 2) {
-			tankkimaara = 2;
-		}
-		return tankkimaara;
-	}
-	/**
-	 * laillisuustarkastus
-	 * @param gc	pelin GameContainer
-	 * @param tankkimaara	tankkien määrä
-	 * @param minimivali 	tankkien väliin minimissään tuleva pikselimäärä
-	 * @return laillinen minimivalin arvo
-	 */
-	private int minimiValiTarkastus(GameContainer gc, int tankkimaara, int minimivali) {
-		if(minimivali < 1) {
-			minimivali = 1;
-		}
-
-		//varmuuden vuoksi *2.5 vaikka *2 olisi teoriassa maksimi
-		int vietyTila = minimivali * tankkimaara * 5 / 2;
-
-		if(vietyTila > gc.getWidth()) {
-			minimivali = gc.getWidth()/(tankkimaara * 5 / 2);
-		}
-		return minimivali;
-	}
+	
 }

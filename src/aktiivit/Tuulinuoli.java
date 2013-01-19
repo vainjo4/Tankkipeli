@@ -1,7 +1,9 @@
 package aktiivit;
-import java.util.Random;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Polygon;
+
+import util.Satunnaisuus;
 
 /**
  * Taustalle piirrettävä, tuulen mukaan rakentuva monikulmio.
@@ -11,7 +13,6 @@ import org.newdawn.slick.geom.Polygon;
 @SuppressWarnings("serial")
 public class Tuulinuoli extends Polygon {
 
-	private Random kone = new Random();
 	private int tuulenSuuruus;
 	private int x;
 	private int y;
@@ -31,16 +32,14 @@ public class Tuulinuoli extends Polygon {
 		this.addPoint(this.x, this.y+15);
 		this.addPoint(this.x+this.annaSuuruus(), this.y);
 
-		System.out.println("TuulenSuuruus : "+this.annaSuuruus());
-
-
+		//System.out.println("TuulenSuuruus : "+this.annaSuuruus());
 	}
 	/**
 	 * Arpoo tuulelle suuruuden. Negatiiviset arvot 
 	 * ovat vasemmalle puhaltavaa tuulta. 
 	 */
 	private void arvoSuuruus() {
-		this.tuulenSuuruus = kone.nextInt(101)-50;
+		this.tuulenSuuruus = Satunnaisuus.annaInt(101)-50;
 	}
 	/**
 	 * Antaa tuulenvoimakkuuden.

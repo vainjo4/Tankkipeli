@@ -4,7 +4,7 @@ import java.util.Random;
 import org.newdawn.slick.GameContainer;
 
 /**
- * Luokka, jossa pelin tarvitsemaa satunnaisuutta
+ * Staattinen luokka, jossa pelin tarvitsemaa satunnaisuutta
  * @author Johannes
  *
  */
@@ -32,10 +32,11 @@ public class Satunnaisuus {
 	
 	
 	/**
-	 * Muodostaa taulukon jonka arvot on satunnaisesta kahdesti tasoitettuja. 
+	 * Muodostaa taulukon jonka arvot ovat satunnaisia ja 
+	 * kahdesti tasoitettuja. 
 	 * @param lukumaara	taulukon haluttu pituus
-	 * @param korkeus
-	 * @return
+	 * @param korkeus	ikkunan korkeus
+	 * @return	taulukko, jonka pituus == lukumaara
 	 */
 	public static int[] satunnaisPolku(int lukumaara, int korkeus) {
 

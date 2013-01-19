@@ -39,7 +39,7 @@ public class Pelitila extends BasicGameState {
 	private Hiukkaset hiukkaset;
 
 	private Shape maasto;
-	private Circle kuti;
+	private Circle ammuksenKuva;
 	private Sound tykkiaani;
 	private Sound rajahdysaani;
 	private ParticleSystem hiukkasRajahdys;
@@ -78,7 +78,7 @@ public class Pelitila extends BasicGameState {
 	 * @param vaunu		Tankki johon osui, jos osui. Voi olla null.
 	 * @param mihinOsui	1 == osui tankkiin, 2 == meni ulos, 3 == osui maahan
 	 */
-	public void osuma(GameContainer gc, Tankki vaunu, int mihinOsui) {
+	private void osuma(GameContainer gc, Tankki vaunu, int mihinOsui) {
 		//mihinOsui:
 		//1 == tankkiin
 		//2 == ulos
@@ -153,7 +153,6 @@ public class Pelitila extends BasicGameState {
 	 */
 	private void tuhoaAmmus(GameContainer gc) {
 
-
 		ammusOlemassa(false);
 		this.ammus = null;
 	}
@@ -183,28 +182,30 @@ public class Pelitila extends BasicGameState {
 	 * @return 
 	 */
 	private void edistaVuoroa(GameContainer gc) {
+
+		//vaihdetaan vuorossaolija
 		this.vuorossaindeksi++;
 
+		//jos meni yli niin jatketaan nollasta
 		if(this.vuorossaindeksi >= this.tankkimaara) {
 			this.vuorossaindeksi = 0;
 		}
 
+		//jos vuorossaolija onkin jo tuhottu, siirretään seuraavalle
 		if(this.tankkitaulukko.annaTankki(vuorossaindeksi).onkoTuhottu()) {
 			edistaVuoroa(gc);
 		}
 
 		//tehdään uusi tuulinuoli
 		this.tuulinuoli = new Tuulinuoli(gc);
-
-		System.out.println(this.maasto.getPointCount());
 	}
+	
 	/**
 	 * Lisää tuhottujen tankkien laskuria.
 	 */
 	public void lisaaTuhottujenLaskuria() {
 		this.tuhotutTankit++;
 	}
-
 
 	/**
 	 * Antaa voittamis-Stringin piirrettäväksi
@@ -227,7 +228,6 @@ public class Pelitila extends BasicGameState {
 				.annaLahtonopeus(true)+"\n" +"Barrel angle "+ tankkivuorossa
 				.annaPiippu().annaPyoristettyKulma();
 	}
-	
 	
 	/**
 	 * Kuormitettu metodi, jotta saadaan aikaan pelitilan initti 
@@ -279,7 +279,7 @@ public class Pelitila extends BasicGameState {
 				tankkimaara, this.parametrit.annaMinimivali());
 
 		//tehdään ammuksen "kuva"
-		this.kuti = new Circle(0,0,2);
+		this.ammuksenKuva = new Circle(0,0,2);
 
 		//tehdään tuulinuoli
 		this.tuulinuoli = new Tuulinuoli(gc);
@@ -287,18 +287,18 @@ public class Pelitila extends BasicGameState {
 		//vuorot alkavat 1. tankista
 		this.vuorossaindeksi = 0;
 
-		//ladataan efektit
+		//ladataan efektit jos ei jo ole
 		if(this.rajahdysaani == null) {
 			this.rajahdysaani = Musiikki.annaRajahdysaani();
 		}
 		if(this.tykkiaani == null) {
 			this.tykkiaani = Musiikki.annaTykkiaani();
 		}
-		//Partikkeliefektiluokka
+		//luodaan partikkeliefektiluokka, jos ei ole
 		if(this.hiukkaset == null) {
 			this.hiukkaset = new Hiukkaset();
 		}
-		//ParticleSystem
+		//haetaan räjähdyksen ParticleSystem
 		if(this.hiukkasRajahdys == null) {
 			this.hiukkasRajahdys = this.hiukkaset.annaRajahdys();
 			hiukkasRajahdys.setVisible(false);
@@ -309,7 +309,9 @@ public class Pelitila extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame peli, Graphics g)
 			throws SlickException {
 
-		Tankki tankkivuorossa = this.tankkitaulukko.annaTankki(this.vuorossaindeksi);
+		Tankki tankkivuorossa = this.tankkitaulukko
+				.annaTankki(this.vuorossaindeksi);
+		
 		int monesko = this.vuorossaindeksi + 1;
 
 		//täytetään tausta gradientfillillä
@@ -318,7 +320,7 @@ public class Pelitila extends BasicGameState {
 		//täytetään maasto gradientfillillä
 		g.fill(this.maasto, ((Maasto) this.maasto).annaMaastonGradient());
 
-		//piirretään tuulinuoli, jos on (luodaan updatessa, ei välttämättä ole olemassa 1. loopilla)
+		//piirretään tuulinuoli ja teksti, jos on olemassa
 		if(this.tuulinuoli != null) {
 			g.fill(this.tuulinuoli);
 
@@ -333,13 +335,12 @@ public class Pelitila extends BasicGameState {
 		//piiretään hitpoint-taulukon otsikko
 		g.drawString("Hitpoints:", gc.getWidth()-180, 10);
 
-		//jos ammus on ilmassa, päivitetään ja piirretään kuti
-		//kuti on ammuksen "kuva"
+		//jos ammus on ilmassa, päivitetään ja piirretään ammuksenKuva
 		if(onkoAmmusIlmassa()) {
 
-			this.kuti.setCenterX(this.ammus.annaX());
-			this.kuti.setCenterY(this.ammus.annaY());
-			g.fill(this.kuti);
+			this.ammuksenKuva.setCenterX(this.ammus.annaX());
+			this.ammuksenKuva.setCenterY(this.ammus.annaY());
+			g.fill(this.ammuksenKuva);
 		}
 
 
@@ -354,7 +355,8 @@ public class Pelitila extends BasicGameState {
 
 			//piiretään hitpoint-taulukon rivit
 			monesko = i+1;
-			g.drawString("Tank "+monesko+" "+ vaunu.annaKunto() + "%", gc.getWidth()-150, 30+i*20);
+			g.drawString("Tank "+monesko+" "+
+			vaunu.annaKunto() + "%", gc.getWidth()-150, 30+i*20);
 
 			if(!vaunu.onkoTuhottu()) {
 
@@ -414,7 +416,8 @@ public class Pelitila extends BasicGameState {
 			while (k < this.tankkimaara) {
 				Tankki vaunu = this.tankkitaulukko.annaTankki(k);
 
-				if (vaunu.annaTormaysmalli().contains(this.ammus.annaX(), this.ammus.annaY())
+				if (vaunu.annaTormaysmalli().contains(
+						this.ammus.annaX(), this.ammus.annaY())		
 						&& !this.ammus.annaAmpuja().equals(vaunu)
 						&& !vaunu.onkoTuhottu()) {
 
@@ -428,17 +431,16 @@ public class Pelitila extends BasicGameState {
 
 			//Out of bounds-setti eli ammus ulos ruudulta-tapaus. Return.
 			if(this.ammus.annaY() > gc.getHeight() 
-					|| this.ammus.annaY() < -1000
-					|| this.ammus.annaX() < -200 
-					|| this.ammus.annaX() > gc.getWidth() +200) {
-
+					|| this.ammus.annaY() < -2000
+					|| this.ammus.annaX() < -100 
+					|| this.ammus.annaX() > gc.getWidth() +100) {
 
 				this.osuma(gc, null, 2);
 
 				//System.out.println("OUT OF BOUNDS");
 				return;
 			}
-
+			//Osuma maastoon. Verrataan Maasto-olioon.
 			if(this.maasto.contains(this.ammus.annaX(), this.ammus.annaY())) {
 				this.osuma(gc, null, 3);
 				return;
@@ -471,7 +473,10 @@ public class Pelitila extends BasicGameState {
 			Tankki tankkivuorossa = this.tankkitaulukko
 					.annaTankki(this.vuorossaindeksi);
 
-			if(input.isKeyDown(Input.KEY_RSHIFT) || input.isKeyDown(Input.KEY_LSHIFT)) {
+			if(input.isKeyDown(Input.KEY_RSHIFT) 
+					|| input.isKeyDown(Input.KEY_LSHIFT)) {
+				//shiftin pohjassa pitäminen 10-kertaistaa 
+				//kaikkien säätöjen säätöaskelen
 				shift = 10;
 			}
 
@@ -496,7 +501,8 @@ public class Pelitila extends BasicGameState {
 
 			//laukaus.
 			//vuoronsiirto vasta osuessa.
-			if(input.isKeyDown(Input.KEY_ENTER) && input.isKeyPressed(Input.KEY_ENTER) && !onkoAmmusIlmassa()) {
+			if(input.isKeyDown(Input.KEY_ENTER) 
+					&& input.isKeyPressed(Input.KEY_ENTER) && !onkoAmmusIlmassa()) {
 
 				this.ammusOlemassa(true);
 				this.ammus = new Ammus(this.tuulinuoli, 

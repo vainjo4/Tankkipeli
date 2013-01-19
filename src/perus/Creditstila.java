@@ -70,33 +70,10 @@ public class Creditstila extends BasicGameState {
 		g.drawImage(this.tankki, 
 				this.tankki.annaX()-(this.tankki.getWidth()/2), 
 				this.tankki.annaY()-this.tankki.getHeight());
-		/*
-		piippu.drawCentered(piippu.annaX(),
-				piippu.annaY());
-	*/
-		//System.out.println(piippu.annaX() + " oli x, y: " + piippu.annaY());
-		
-		//this.tankki.draw(this.tankki.annaX(), this.tankki.annaY());
-		
 		
 		g.drawString(annaKrediittiString(gc), gc.getWidth()/2-125, gc.getHeight()/8);
 		
 		g.drawImage(this.nappi, this.nappix, this.nappiy);
-		
-		/*
-		g.draw(new Rectangle(vaunu.annaX()-(vaunu.getWidth()/2),
-				vaunu.annaY()-vaunu.getHeight(), 3,3));
-*
-		g.draw(new Rectangle(piippu.annaX(),
-				piippu.annaY(),3,3));
-*
-		g.draw(new Rectangle(piippu.annaX()+piippu.getCenterOfRotationX(),
-				vaunu.annaY()+piippu.getCenterOfRotationY(),3,3));
-		/*
-		g.draw(new Rectangle(vaunu.annaX(),
-				vaunu.annaY(),3,3));
-		*/
-		
 	}
 
 	@Override
@@ -105,7 +82,6 @@ public class Creditstila extends BasicGameState {
 		
 		this.tankki.putoa(gc);
 		this.tankki.rotate((float) 0.1*delta);
-//		this.tankki.annaPiippu().rotate((float) 0.2*delta);
 		
 		Input input = gc.getInput();
 		

@@ -5,9 +5,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
 /**
- * 
+ * Luokka, joka lataa efektit ja musiikin. 
+ * Luo uuden säikeen, koska musiikin lataaminen on hidasta (~4 sekuntia).
+ * Musiikin lopettamiseen tai säätämiseen ei ole mitään in-game-tapaa.
  * @author Johannes
- *
  */
 public class Musiikki implements Runnable {
 
@@ -15,19 +16,26 @@ public class Musiikki implements Runnable {
 	private static Sound rajahdysaani;
 	private static Sound tykkiaani;
 
+	/**
+	 * Antaa ampumisäänen
+	 * @return	ääniefekti
+	 */
 	public static Sound annaTykkiaani() {
 		return tykkiaani;
 	}
 	
+	/**
+	 * Antaa osumisäänen
+	 * @return
+	 */
 	public static Sound annaRajahdysaani() {
 		return rajahdysaani;
 	}
 	
 	@Override
 	public void run() {
-
-		//System.out.println("a "+System.currentTimeMillis());
 		
+		//hakee äänet ja musiikin
 		try {
 			Musiikki.rajahdysaani = new Sound("res/shell1.ogg");
 			Musiikki.tykkiaani = new Sound("res/gun.ogg");
@@ -35,11 +43,9 @@ public class Musiikki implements Runnable {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		//System.out.println("b "+System.currentTimeMillis());
 		
 		Musiikki.musiikki.setVolume(1/2);
 		Musiikki.musiikki.loop();
 		
-		//System.out.println("c "+System.currentTimeMillis());
 	}
 }

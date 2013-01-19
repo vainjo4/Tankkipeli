@@ -31,7 +31,8 @@ import util.Musiikki;
  * 
  * Peli-luokan ajaminen luo GameStatet ja yhden appGameContainerin.
  * Slick ajaa kulissien takana tilaluokkien init()-metodit. 
- * Pelitila-luokassa tämä kutsu ei tee mitään. Syy myöhemmin.
+ * Pelitila-luokassa tämä kutsu ei tee mitään. Syynä on Parametrit-luokan 
+ * käyttö, lisää alla.
  * 
  * Pelistä aukeaa ensin Valikkotila: päävalikkonäkymä, jossa on 
  * Start- ja Quit-napit. Start-nappi vie Asetustilaan, jossa voidaan 
@@ -53,33 +54,30 @@ import util.Musiikki;
  * 
  * @author Johannes
  *
- *TODO: minimiväli ei ehkä toimi
- *
  */
 public class Peli extends StateBasedGame {
 
 	public static final int VALIKKOTILA  = 0;
-    public static final int PELITILA = 1;
-    public static final int ASETUSTILA = 2;
-    public static final int PAUSETILA = 3;
-    public static final int CREDITSTILA = 4;
- 
-/**
- * @throws SlickException
- */
+	public static final int PELITILA = 1;
+	public static final int ASETUSTILA = 2;
+	public static final int PAUSETILA = 3;
+	public static final int CREDITSTILA = 4;
+
+	/**
+	 * @throws SlickException
+	 */
 	public Peli() throws SlickException  {
 		super("TankWars");
-		
+
 		new Thread(new Musiikki()).start();
-		
+
 		this.addState(new Valikkotila(VALIKKOTILA));
 		this.addState(new Pelitila(PELITILA));
 		this.addState(new Asetustila(ASETUSTILA));
 		this.addState(new Pausetila(PAUSETILA));
 		this.addState(new Creditstila(CREDITSTILA));
-		
+
 		this.enterState(VALIKKOTILA);
-		
 	}
 
 	/**
@@ -87,26 +85,25 @@ public class Peli extends StateBasedGame {
 	 * @throws SlickException
 	 */
 	public static void main(String[] args) throws SlickException {		
-		
-		Peli peli = new Peli();
-		AppGameContainer app = new AppGameContainer(peli);
-		
+
+		AppGameContainer app = new AppGameContainer(new Peli());
+
 		//800*600, ei fullscreen(vielä tässä vaiheessa)
 		app.setDisplayMode(800, 600, false); 
-		
+
 		//sopivannopeuksiselle pelin kululle kokeilemalla löydetyt luvut
 		//logiikanpäivitysten ero korkeintaan 25 ms, kohde fps 60
 		app.setMaximumLogicUpdateInterval(25);
 		app.setTargetFrameRate(60);
-		
+
 		//ei fps-lukemaa
 		app.setShowFPS(false);
-		
+
 		app.start();
 	}
 
-	
-	
+
+
 	@Override
 	public void initStatesList(GameContainer app) throws SlickException {
 		//Tyhjä. Slick ajaa initit kulissien takana silti. 
