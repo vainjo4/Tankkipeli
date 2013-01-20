@@ -24,7 +24,7 @@ public class Pausetila extends BasicGameState {
 
 	private int id;
 
-	private static Shape maasto;
+	private Shape maasto;
 
 	/**
 	 * nappien kuvat
@@ -52,9 +52,13 @@ public class Pausetila extends BasicGameState {
 	private int taaksey;
 	private int ruudunkorkeus;
 	private int ruudunleveys;
-	
+
 	private Tausta tausta;
 
+	/**
+	 * Luo pausetilan
+	 * @param id	tilan id-numero
+	 */
 	public Pausetila(int id) {
 		this.id = id;
 
@@ -63,7 +67,7 @@ public class Pausetila extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame peli)
 			throws SlickException {
-		
+
 		//alustetaan mitat apumuuttujiin
 		this.ruudunkorkeus = gc.getHeight();
 		this.ruudunleveys = gc.getWidth();
@@ -95,7 +99,7 @@ public class Pausetila extends BasicGameState {
 				this.eteeny,
 				this.eteennappi.getWidth(),
 				this.eteennappi.getHeight());
-		
+
 		this.taaksenelio = new Rectangle(
 				this.taaksex, 
 				this.taaksey,
@@ -114,10 +118,10 @@ public class Pausetila extends BasicGameState {
 		g.fill(this.tausta, this.tausta.annaTaustanGradient());
 
 		//piirretään maasto
-		if(Pausetila.maasto instanceof Maasto) {
-		g.fill(Pausetila.maasto, ((Maasto) Pausetila.maasto).annaMaastonGradient());
+		if(this.maasto instanceof Maasto) {
+			g.fill(this.maasto, ((Maasto) this.maasto).annaMaastonGradient());
 		}
-		
+
 		//piirretään valikkoruutu
 		g.fill(this.ruutu, new GradientFill(
 				0, this.ruutu.getMinY(), new Color(200, 200, 200),
@@ -164,11 +168,10 @@ public class Pausetila extends BasicGameState {
 	}
 
 	/**
-	 * Kutsutaan Pelitilassa esciä painettaessa. Staattinen, 
-	 * koska Pelitilalla ei viittausta Pausetilaan.
+	 * Asettaa maaston.
 	 * @param maasto	Maasto, jonka Pausetila tallettaa.
 	 */
-	public static void otaMaasto(Shape maasto) {
-		Pausetila.maasto = maasto;
+	public void asetaMaasto(Shape maasto) {
+		this.maasto = maasto;
 	}
 }

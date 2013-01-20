@@ -13,6 +13,7 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.particles.ParticleSystem;
 import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
@@ -133,7 +134,7 @@ public class Pelitila extends BasicGameState {
 		this.kivikko.tiputaKivia(gc);
 		this.maasto = new Maasto(gc, this.kivikko);
 	}
-	
+
 	/**
 	 * Laskee kaikki tankit maaston pinnan tasalle.
 	 */
@@ -179,7 +180,6 @@ public class Pelitila extends BasicGameState {
 	/**
 	 * Antaa vuoron seuraavalle.
 	 * @param gc pelin GameContainer
-	 * @return 
 	 */
 	private void edistaVuoroa(GameContainer gc) {
 
@@ -199,7 +199,7 @@ public class Pelitila extends BasicGameState {
 		//tehdään uusi tuulinuoli
 		this.tuulinuoli = new Tuulinuoli(gc);
 	}
-	
+
 	/**
 	 * Lisää tuhottujen tankkien laskuria.
 	 */
@@ -228,7 +228,7 @@ public class Pelitila extends BasicGameState {
 				.annaLahtonopeus(true)+"\n" +"Barrel angle "+ tankkivuorossa
 				.annaPiippu().annaPyoristettyKulma();
 	}
-	
+
 	/**
 	 * Kuormitettu metodi, jotta saadaan aikaan pelitilan initti 
 	 * vasta kun parametrit on tiedossa
@@ -311,15 +311,16 @@ public class Pelitila extends BasicGameState {
 
 		Tankki tankkivuorossa = this.tankkitaulukko
 				.annaTankki(this.vuorossaindeksi);
-		
+
 		int monesko = this.vuorossaindeksi + 1;
 
 		//täytetään tausta gradientfillillä
 		g.fill(this.tausta, this.tausta.annaTaustanGradient());
 
 		//täytetään maasto gradientfillillä
-		g.fill(this.maasto, ((Maasto) this.maasto).annaMaastonGradient());
-
+		if(this.maasto instanceof Maasto) {
+			g.fill(this.maasto, ((Maasto) this.maasto).annaMaastonGradient());
+		}
 		//piirretään tuulinuoli ja teksti, jos on olemassa
 		if(this.tuulinuoli != null) {
 			g.fill(this.tuulinuoli);
@@ -356,7 +357,7 @@ public class Pelitila extends BasicGameState {
 			//piiretään hitpoint-taulukon rivit
 			monesko = i+1;
 			g.drawString("Tank "+monesko+" "+
-			vaunu.annaKunto() + "%", gc.getWidth()-150, 30+i*20);
+					vaunu.annaKunto() + "%", gc.getWidth()-150, 30+i*20);
 
 			if(!vaunu.onkoTuhottu()) {
 
@@ -456,9 +457,12 @@ public class Pelitila extends BasicGameState {
 
 		// escillä pääsee pause-valikkoon ammuksesta riippumatta
 		if(input.isKeyDown(Input.KEY_ESCAPE)) {
-			Pausetila.otaMaasto(this.maasto);
-			peli.enterState(Peli.PAUSETILA);
-			return;
+			GameState pause = peli.getState(Peli.PAUSETILA);
+			if(pause instanceof Pausetila) {
+				((Pausetila) peli.getState(Peli.PAUSETILA)).asetaMaasto(this.maasto);
+				peli.enterState(Peli.PAUSETILA);
+				return;
+			}
 		}	
 
 		/*

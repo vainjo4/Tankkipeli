@@ -18,7 +18,7 @@ public class Musiikki implements Runnable {
 
 	/**
 	 * Antaa ampumisäänen
-	 * @return	ääniefekti
+	 * @return	ääniefekti tykinlaukaukselle
 	 */
 	public static Sound annaTykkiaani() {
 		return tykkiaani;
@@ -26,7 +26,7 @@ public class Musiikki implements Runnable {
 	
 	/**
 	 * Antaa osumisäänen
-	 * @return
+	 * @return	ääniefekti räjähdykselle
 	 */
 	public static Sound annaRajahdysaani() {
 		return rajahdysaani;

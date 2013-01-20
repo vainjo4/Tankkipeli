@@ -15,6 +15,10 @@ public class Tausta extends Rectangle {
 
 	private GradientFill taustaGradient;
 
+	/**
+	 * Luo uuden taustan
+	 * @param gc	pelin GameContainer
+	 */
 	public Tausta(GameContainer gc) {
 		super(0, 0, gc.getWidth(), gc.getHeight());
 		
@@ -22,12 +26,19 @@ public class Tausta extends Rectangle {
 				(gc.getWidth()/2), 0, new Color(100, 100, 220),
 				(gc.getWidth()/2), gc.getHeight(), new Color(180,180,200));
 	}
+	/**
+	 * Antaa taivaannäköisen gradientfillin
+	 * @return taustan gradient
+	 */
 	public GradientFill annaTaustanGradient() {
 		return this.taustaGradient;
 	}
-	
+/*	
+	/**
+	 * @return
+	 *
 	public Tausta annaTausta() {
 		return this;
 	}
-
+*/
 }

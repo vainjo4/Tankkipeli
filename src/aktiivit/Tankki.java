@@ -29,7 +29,6 @@ public class Tankki extends Image {
 	/**
 	 * Pelissä olevat "oikeat" tankit luodaan tällä.
 	 * @param gc	pelin GameContainer
-	 * @param pelitila	pelitila, joka pyörittää peliä
 	 * @param tankkitaulukko	tankkitaulukko, joka manageroi tankkeja
 	 * @throws SlickException
 	 */
@@ -59,7 +58,8 @@ public class Tankki extends Image {
 	public Tankki(GameContainer gc) throws SlickException {
 		super(new Image(ResourceLoader.getResource("res/static_tank.png").getPath()));
 
-		//putoavalle tankille alkukoordinaatit.
+		//creditsin putoavalle tankille alkukoordinaatit.
+		//päävalikkotankille nämä ylikirjoitetaan.
 		this.x = Satunnaisuus.arvoIkkunastaX(gc);
 		this.y = -10;
 	}

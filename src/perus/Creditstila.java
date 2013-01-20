@@ -14,6 +14,11 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import aktiivit.Tankki;
 
+/**
+ * GameState-luokka Credits-näkymää varten.
+ * @author Johannes
+ *
+ */
 public class Creditstila extends BasicGameState {
 
 	private int id;

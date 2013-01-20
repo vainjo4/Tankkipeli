@@ -10,7 +10,7 @@ import org.newdawn.slick.geom.Shape;
  * Kivien koko on kautta ohjelman kovakoodattu olemaan 3*3.
  * Yritin Pikselivakion käyttöä, mutta suuren läpikäymisurakan
  * (mm. Pelitilan update-metodi) vuoksi lisäoperaatiot aiheuttivat 
- * melkoisen rasitteen laskentateholle.
+ * vain lisärasitteen laskentateholle.
  * 
  * @author Johannes
  */
@@ -121,9 +121,9 @@ public class Kivikko {
 						&& reika.intersects(this.annaTaulukosta(x,y))) {
 					this.poistaTaulukosta(x,y);
 				}
-				y++;
+				y = y+3;
 			}
-			x++;
+			x = x+3;
 		}
 	}
 	/**
@@ -140,7 +140,8 @@ public class Kivikko {
 		int y;
 		int uusiY;
 		while(x >= 0) {
-			// -1 välttää oob:n ja -3 pitää y+3:n taulukossa 
+			// -1 jotta välttää oob:n ja -3 pitää y+3:n taulukossa, 
+
 			y = this.annaKorkeus()-4;
 			while(y >= 0) {
 
@@ -158,6 +159,8 @@ public class Kivikko {
 						}	
 					}
 				}
+				//inkrementti (tai dekrementti) 
+				//== 1 varmatoimisuuden vuoksi
 				y--;
 			}
 			x--;

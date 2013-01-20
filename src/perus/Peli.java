@@ -57,10 +57,25 @@ import util.Musiikki;
  */
 public class Peli extends StateBasedGame {
 
+	/**
+	 * Tilan id-numero
+	 */
 	public static final int VALIKKOTILA  = 0;
+	/**
+	 * Tilan id-numero
+	 */
 	public static final int PELITILA = 1;
+	/**
+	 * Tilan id-numero
+	 */
 	public static final int ASETUSTILA = 2;
+	/**
+	 * Tilan id-numero
+	 */
 	public static final int PAUSETILA = 3;
+	/**
+	 * Tilan id-numero
+	 */
 	public static final int CREDITSTILA = 4;
 
 	/**

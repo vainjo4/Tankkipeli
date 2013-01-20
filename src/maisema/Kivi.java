@@ -2,6 +2,11 @@ package maisema;
 
 import org.newdawn.slick.geom.Rectangle;
 
+/**
+ * Neliön alaluokka jota käytetään Kivikossa.
+ * @author Johannes
+ *
+ */
 @SuppressWarnings("serial")
 public class Kivi extends Rectangle {
 
