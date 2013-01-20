@@ -5,14 +5,14 @@ import org.newdawn.slick.geom.Shape;
 
 
 /**
- * Luokka, joka huolehtii Kivistä.
+ * Luokka, joka huolehtii Kivista.
  * 
  * Kivien koko on kautta ohjelman kovakoodattu olemaan 3*3.
- * Yritin Pikselivakion käyttöä, mutta suuren läpikäymisurakan
- * (mm. Pelitilan update-metodi) vuoksi lisäoperaatiot aiheuttivat 
- * vain lisärasitteen laskentateholle.
+ * Yritin Pikselivakion kayttoa, mutta suuren lapikaymisurakan
+ * (mm. Pelitilan update-metodi) vuoksi lisaoperaatiot aiheuttivat 
+ * vain lisarasitteen laskentateholle.
  * 
- * @author Johannes
+ * @author 290836
  */
 public class Kivikko {
 
@@ -21,7 +21,7 @@ public class Kivikko {
 	/**
 	 * Luo Kivikon Maaston mukaan.
 	 * @param gc	pelin GameContainer.
-	 * @param maasto	Maasto jonka mukaan tehdään.
+	 * @param maasto	Maasto jonka mukaan tehdaan.
 	 */
 	public Kivikko(GameContainer gc, Shape maasto) {
 
@@ -33,15 +33,15 @@ public class Kivikko {
 		this.teeKivikko(gc, leveys, korkeus, maasto);
 	}
 	/**
-	 * Täyttää Kivikon Kivillä.
+	 * Tayttaa Kivikon Kivilla.
 	 * @param gc pelin GameContainer
 	 * @param leveys	taulukon leveys
 	 * @param korkeus	taulukon korkeus
-	 * @param maasto	Maasto, jonka mukaan Kivikko tehdään
+	 * @param maasto	Maasto, jonka mukaan Kivikko tehdaan
 	 */
 	public void teeKivikko(GameContainer gc, int leveys, 
 			int korkeus, Shape maasto) {
-		//3 on neliön sivun pituus
+		//3 on nelion sivun pituus
 		int x = 0;
 		while (x < leveys) {
 
@@ -80,9 +80,9 @@ public class Kivikko {
 	}
 
 	/**
-	 * Lisää taulukkoon Kiven
-	 * @param x	lisättävän x-koordinaatti
-	 * @param y	lisättävän y-koordinaatti
+	 * Lisaa taulukkoon Kiven
+	 * @param x	lisattavan x-koordinaatti
+	 * @param y	lisattavan y-koordinaatti
 	 */
 	public void lisaaTaulukkoon(int x, int y) {
 		this.kivitaulu[x][y] = new Kivi(x,y);	
@@ -103,7 +103,7 @@ public class Kivikko {
 	}
 
 	/**
-	 * Tekee Kivikkoon reika-muotoisen reiän. 
+	 * Tekee Kivikkoon reika-muotoisen reian. 
 	 * @param reika	poistettava muoto
 	 * @param gc	pelin GameContainer
 	 */
@@ -127,25 +127,25 @@ public class Kivikko {
 		}
 	}
 	/**
-	 * Poistaa ja lisää kiviä siten, 
-	 * että y-suuntaiset taulukot ovat yhtenäisiä,
-	 * eli "tiputtaa" kiviä.
+	 * Poistaa ja lisaa kivia siten, 
+	 * etta y-suuntaiset taulukot ovat yhtenaisia,
+	 * eli "tiputtaa" kivia.
 	 * @param gc pelin GameContainer
 	 */
 	public void tiputaKivia(GameContainer gc) {
 		//loopit aloittavat alhaalta jotta toimii kerralla.
 
-		// -1 välttää oob-poikkeuksen
+		// -1 valttaa oob-poikkeuksen
 		int x = this.annaLeveys()-1;
 		int y;
 		int uusiY;
 		while(x >= 0) {
-			// -1 jotta välttää oob:n ja -3 pitää y+3:n taulukossa, 
+			// -1 jotta valttaa oob:n ja -3 pitaa y+3:n taulukossa, 
 
 			y = this.annaKorkeus()-4;
 			while(y >= 0) {
 
-				//+3 on neliön sivun pituus
+				//+3 on nelion sivun pituus
 				if(this.annaTaulukosta(x,y) != null 
 						&& this.annaTaulukosta(x,y+3) == null) {
 

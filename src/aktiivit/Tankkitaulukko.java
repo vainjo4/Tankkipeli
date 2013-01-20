@@ -8,9 +8,8 @@ import util.Satunnaisuus;
 
 
 /**
- * 
- * @author Johannes
- * TODO: minimivälitoiminto ei toistaiseksi toimi
+ * Luokka, joka hallinnoi tankkeja.
+ * @author 290836
  */
 public class Tankkitaulukko {
 
@@ -21,9 +20,9 @@ public class Tankkitaulukko {
 	/**
 	 * Luo uuden taulukon
 	 * @param gc 			pelin GameContainer
-	 * @param pelitila 		peliä pyörittävä GameState
+	 * @param pelitila 		pelia pyorittava GameState
 	 * @param tankkimaara	montako tankkia taulukkoon tulee 
-	 * @param minimivali	minimietäisyys tankkien välillä
+	 * @param minimivali	minimietaisyys tankkien valilla
 	 * @throws SlickException 
 	 */
 	public Tankkitaulukko(GameContainer gc, Pelitila pelitila, int tankkimaara, int minimivali) 
@@ -33,9 +32,9 @@ public class Tankkitaulukko {
 		this.sijoitettujenpaikat = new int[tankkimaara];
 
 		/**
-		 * Tehdään tankit.
+		 * Tehdaan tankit.
 		 * silmukka voisi teoriassa olla loputon, 
-		 * mutta Asetustilan minimiValiTarkastus() huolehtii, että laillisia paikkoja on. 
+		 * mutta Asetustilan minimiValiTarkastus() huolehtii, etta laillisia paikkoja on. 
 		 */
 		int i = 0;
 		while(i < tankkimaara) {			
@@ -64,8 +63,8 @@ public class Tankkitaulukko {
 
 	/**
 	 * Tarkastaa x:n laillisuuden.
-	 * @param x	arvo, jota kysytään
-	 * @return	onko x-arvo liian lähellä muita tankkeja
+	 * @param x	arvo, jota kysytaan
+	 * @return	onko x-arvo liian lahella muita tankkeja
 	 */
 	private boolean onkoTassaLaillinenPaikka(int x) {
 
@@ -74,7 +73,9 @@ public class Tankkitaulukko {
 			if(this.sijoitettujenpaikat[k] != 0
 					&& x > this.sijoitettujenpaikat[k] - this.minimivali 
 					&& x < this.sijoitettujenpaikat[k] + this.minimivali) {
-				System.out.println("laitaTankki: false");
+				
+				//System.out.println("laitaTankki: false");
+				
 				return false;
 			}
 			k++;

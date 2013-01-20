@@ -6,8 +6,8 @@ import org.newdawn.slick.geom.Polygon;
 import util.Satunnaisuus;
 
 /**
- * Taustalle piirrettävä, tuulen mukaan rakentuva monikulmio.
- * @author Johannes
+ * Taustalle piirrettava, tuulen mukaan rakentuva monikulmio.
+ * @author 290836
  *
  */
 @SuppressWarnings("serial")

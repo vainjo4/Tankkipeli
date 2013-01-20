@@ -19,11 +19,11 @@ import util.Parametrit;
 
 /**
  * GameState-luokka start-napin painamisen 
- * ja pelin alkamisen väliselle parametrienkysymisnäkymälle.
+ * ja pelin alkamisen valiselle parametrienkysymisnakymalle.
  * 
  * Luokassa "painonappi" tarkoittaa fullscreenin checkboxia.
  * 
- * @author Johannes
+ * @author 290836
  *
  */
 public class Asetustila extends BasicGameState {
@@ -51,14 +51,14 @@ public class Asetustila extends BasicGameState {
 	private Image painonappi_pohjassa;
 
 	/**
-	 * Nappien neliöt
+	 * Nappien neliot
 	 */
 	private Rectangle oknelio;
 	private Rectangle poisnelio;
 	private Rectangle painonappinelio;
 
 	/**
-	 * Tekstikentät
+	 * Tekstikentat
 	 */
 	private TextField tankkikentta;
 	private TextField tuhokentta;
@@ -107,7 +107,7 @@ public class Asetustila extends BasicGameState {
 
 	/**
 	 * laillisuustarkastus
-	 * @param tankkimaara 	tankkien määrä
+	 * @param tankkimaara 	tankkien maara
 	 * @return laillinen tankkimaaran arvo
 	 */
 	private int tankkiTarkastus(int tankkimaara) {
@@ -123,8 +123,8 @@ public class Asetustila extends BasicGameState {
 	/**
 	 * laillisuustarkastus
 	 * @param gc	pelin GameContainer
-	 * @param tankkimaara	tankkien määrä
-	 * @param minimivali 	tankkien väliin minimissään tuleva x-suuntainen pikselimäärä
+	 * @param tankkimaara	tankkien maara
+	 * @param minimivali 	tankkien valiin minimissaan tuleva x-suuntainen pikselimaara
 	 * @return laillinen minimivalin arvo
 	 */
 	private int minimiValiTarkastus(GameContainer gc, int tankkimaara, int minimivali) {
@@ -155,7 +155,7 @@ public class Asetustila extends BasicGameState {
 		int kenttax = ruudunleveys/2+100;
 		int	kenttay = ruudunkorkeus/6;	
 
-		//käytetään oletusfonttia
+		//kaytetaan oletusfonttia
 		Font fontti = gc.getDefaultFont();
 
 		//tavallinen tausta
@@ -181,31 +181,31 @@ public class Asetustila extends BasicGameState {
 		this.poisy = this.ruudunkorkeus-this.poisnappi.getHeight()-30;
 		this.painonappiy = kenttay+180;
 
-		//tehdään nappeja vastaavat neliöt hiirentarkkailua varten
+		//tehdaan nappeja vastaavat neliot hiirentarkkailua varten
 		this.oknelio = new Rectangle(
 				this.okx, 
 				this.oky, 
 				this.oknappi.getWidth(), 
 				this.oknappi.getHeight());
 
-		//main menu-napille neliö
+		//main menu-napille nelio
 		this.poisnelio = new Rectangle(
 				this.poisx,
 				this.poisy, 
 				this.poisnappi.getWidth(), 
 				this.poisnappi.getHeight());		
 
-		//checkboxille neliö
+		//checkboxille nelio
 		this.painonappinelio = new Rectangle(
 				this.painonappix, 
 				this.painonappiy, 
 				this.painonappi_normi.getWidth(), 
 				this.painonappi_pohjassa.getHeight());
 
-		/* Luodaan tekstikentät.
+		/* Luodaan tekstikentat.
 		 * konstruktori
 		 * TextField(GUIContext container, Font font, int x, int y, int width, int height)
-		 * nullcheckit, jotta kentät toimisivat myös reinitin jälkeen
+		 * nullcheckit, jotta kentat toimisivat myos reinitin jalkeen
 		 */
 		if(this.tankkikentta == null) {
 			this.tankkikentta = new TextField(gc, fontti, 0, 0, 100,20);
@@ -220,7 +220,7 @@ public class Asetustila extends BasicGameState {
 			this.ppmpkentta = new TextField(gc, fontti, 0, 0, 100,20);
 		}
 
-		//asetetaan kentät paikoilleen
+		//asetetaan kentat paikoilleen
 		this.tankkikentta.setLocation(kenttax, kenttay);
 		this.tuhokentta.setLocation(kenttax, kenttay+40);
 		this.minimivalikentta.setLocation(kenttax, kenttay+80);
@@ -237,14 +237,14 @@ public class Asetustila extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame peli, Graphics g)
 			throws SlickException {
 
-		//täytetään tausta
+		//taytetaan tausta
 		g.fill(this.tausta, this.tausta.annaTaustanGradient());
 
-		//piirretään napit
+		//piirretaan napit
 		g.drawImage(this.oknappi, this.okx, this.oky);
 		g.drawImage(this.poisnappi, this.poisx, this.poisy);
 
-		//valitaan kumpi kuva piirretään
+		//valitaan kumpi kuva piirretaan
 		if(this.annaPainonappiPainettu()) {
 			g.drawImage(this.painonappi_pohjassa, 
 					this.painonappix, this.painonappiy);
@@ -254,14 +254,14 @@ public class Asetustila extends BasicGameState {
 					this.painonappix, this.painonappiy);
 		}
 
-		//piirretään tekstit
+		//piirretaan tekstit
 		g.drawString(this.annaEsittely(),
 				this.ruudunleveys/2-200, this.ruudunkorkeus/6);
 
 		g.drawString(this.annaOhjeet(), 
 				this.ruudunleveys/2-300, this.ruudunkorkeus/3*2-20);
 
-		//piirretään tekstikentät
+		//piirretaan tekstikentat
 		this.tankkikentta.render(gc, g);
 		this.tuhokentta.render(gc, g);
 		this.minimivalikentta.render(gc, g);
@@ -370,7 +370,7 @@ public class Asetustila extends BasicGameState {
 		//System.out.println("luoJaLahetaParametrit");
 
 
-		//oletusarvot muuttujiin, jos parseInt epäonnistuu
+		//oletusarvot muuttujiin, jos parseInt epaonnistuu
 		int tankkimaara = this.tankki_oletus; 
 		int ammustuho = this.tuho_oletus;
 		int minimivali = this.minimi_oletus;
@@ -383,7 +383,7 @@ public class Asetustila extends BasicGameState {
 			ppmp = Integer.parseInt(this.ppmpkentta.getText());
 		}
 		catch(NumberFormatException ex) {
-			System.err.println("laiton syöte *******************************");
+			System.err.println("laiton syote *******************************");
 		}
 
 		/*

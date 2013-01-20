@@ -5,8 +5,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.util.ResourceLoader;
 
 /**
- * Tankin liikkuva osa, joka osoittaa sinne minne tankki tähtää.
- * @author Johannes
+ * Tankin liikkuva osa, joka osoittaa sinne minne tankki tahtaa.
+ * @author 290836
  */
 public class Piippu extends Image {
 
@@ -24,18 +24,18 @@ public class Piippu extends Image {
 	}
 	
 	/**
-	 * Antaa piipun kiertymän vain muutaman numeron tarkkuudella  
-	 * @return pyöristetty kiertymä
+	 * Antaa piipun kiertyman vain muutaman numeron tarkkuudella  
+	 * @return pyoristetty kiertyma
 	 */
 	public double annaPyoristettyKulma() {
 		return (Math.floor(Math.abs(this.getRotation()*100)))/100;
 	}
 	
 	/**
-	 * Asettaa piipun kiertoakselin. En tiedä miksi, 
-	 * mutta ilman getCenterOfRotation-kutsuja tämä ei 
+	 * Asettaa piipun kiertoakselin. En tieda miksi, 
+	 * mutta ilman getCenterOfRotation-kutsuja tama ei 
 	 * toimi. 
-	 * Todennäköisesti Slickin bugi.
+	 * Todennakoisesti Slickin bugi.
 	 */
 	public void asetaSarana() {
 		

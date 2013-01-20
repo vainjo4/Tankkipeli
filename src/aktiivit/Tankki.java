@@ -11,8 +11,8 @@ import util.Satunnaisuus;
 
 
 /**
- * Luokka joka määrittää pelaajan ohjaamat tankit.
- * @author Johannes
+ * Luokka joka maarittaa pelaajan ohjaamat tankit.
+ * @author 290836
  *
  */
 public class Tankki extends Image {
@@ -27,7 +27,7 @@ public class Tankki extends Image {
 
 	
 	/**
-	 * Pelissä olevat "oikeat" tankit luodaan tällä.
+	 * Pelissa olevat "oikeat" tankit luodaan talla.
 	 * @param gc	pelin GameContainer
 	 * @param tankkitaulukko	tankkitaulukko, joka manageroi tankkeja
 	 * @throws SlickException
@@ -51,7 +51,7 @@ public class Tankki extends Image {
 	
 	
 	/**
-	 * Valikkokoristeena käytettävä toiminnaton malli tankista.
+	 * Valikkokoristeena kaytettava toiminnaton malli tankista.
 	 * @param gc
 	 * @throws SlickException
 	 */
@@ -59,7 +59,7 @@ public class Tankki extends Image {
 		super(new Image(ResourceLoader.getResource("res/static_tank.png").getPath()));
 
 		//creditsin putoavalle tankille alkukoordinaatit.
-		//päävalikkotankille nämä ylikirjoitetaan.
+		//paavalikkotankille nama ylikirjoitetaan.
 		this.x = Satunnaisuus.arvoIkkunastaX(gc);
 		this.y = -10;
 	}
@@ -67,15 +67,15 @@ public class Tankki extends Image {
 	
 	
 	/**
-	 * Asettaa uuden törmäysmallin
-	 * @param tormaysmalli	uusi törmäysmalli
+	 * Asettaa uuden tormaysmallin
+	 * @param tormaysmalli	uusi tormaysmalli
 	 */
 	public void asetaTormaysmalli(Tankintormaysmalli tormaysmalli) {
 		this.tormaysmalli = tormaysmalli;
 	}
 
 	/**
-	 * palauttaa tankin törmäysmallin
+	 * palauttaa tankin tormaysmallin
 	 * @return this.tormaysmalli
 	 */
 	public Tankintormaysmalli annaTormaysmalli() {
@@ -119,7 +119,7 @@ public class Tankki extends Image {
 		return this.y;
 	}
 	/**
-	 * Muuttaa lähtönopeutta
+	 * Muuttaa lahtonopeutta
 	 * @param gc pelin GameContainer
 	 * @param muutos muutos, voi olla negatiivinen
 	 */
@@ -133,7 +133,7 @@ public class Tankki extends Image {
 		else {
 			bonusvoima = 1;
 		}
-		//yläraja 10 tai 20
+		//ylaraja 10 tai 20
 		if(annaLahtonopeus(false) > 10*bonusvoima) {
 			this.lahtonopeus = 10*bonusvoima;
 		}
@@ -152,7 +152,7 @@ public class Tankki extends Image {
 	/**
 	 * Laskee tankin kuntoa ja huolehtii tuhoamisesta.
 	 * @param paljonko	paljonko vauriota
-	 * @param pelitila	peliä pyörittävä pelitila
+	 * @param pelitila	pelia pyorittava pelitila
 	 */
 	public void vaurioita(int paljonko, Pelitila pelitila) {
 		this.muutaKuntoa(-paljonko);
@@ -162,7 +162,7 @@ public class Tankki extends Image {
 	}
 	/**
 	 * Muuttaa tankin kuntoa.
-	 * @param muutos	muutoksen määrä, voi olla negatiivinen
+	 * @param muutos	muutoksen maara, voi olla negatiivinen
 	 */
 	public void muutaKuntoa(int muutos) {
 		asetaKunto(this.kunto + muutos);
@@ -181,8 +181,8 @@ public class Tankki extends Image {
 	}
 
 	/**
-	 * Pudottaa tankkia kolmella pikselillä. Jos tippuu 
-	 * ulos ruudulta, tiputtaa satunnaisesta kohdasta ylhäältä.
+	 * Pudottaa tankkia kolmella pikselilla. Jos tippuu 
+	 * ulos ruudulta, tiputtaa satunnaisesta kohdasta ylhaalta.
 	 * Tarkoitettu Credits-tilan putoavalle tankille.
 	 * @param gc pelin GameContainer
 	 */
@@ -205,8 +205,8 @@ public class Tankki extends Image {
 	}
 
 	/**
-	 * Tuhoaa tämän tankin.
-	 * @param pelitila	Pelitila, joka pyörittää peliä
+	 * Tuhoaa taman tankin.
+	 * @param pelitila	Pelitila, joka pyorittaa pelia
 	 */
 	public void tuhoa(Pelitila pelitila) {
 		this.tuhottu  = true;
@@ -222,7 +222,7 @@ public class Tankki extends Image {
 	}
 
 	/**
-	 * Antaa tämän tankin piipun
+	 * Antaa taman tankin piipun
 	 * @return	piippu
 	 */
 	public Piippu annaPiippu() {
@@ -230,9 +230,9 @@ public class Tankki extends Image {
 	}
 
 	/**
-	 * Antaa lähtönopeuden arvon
-	 * @param pyorista	kertoo halutaanko tulos pyöristettynä vai ei
-	 * @return	lähtönopeus
+	 * Antaa lahtonopeuden arvon
+	 * @param pyorista	kertoo halutaanko tulos pyoristettyna vai ei
+	 * @return	lahtonopeus
 	 */
 	public float annaLahtonopeus(boolean pyorista) {
 		if (!pyorista) {

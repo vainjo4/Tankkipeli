@@ -1,9 +1,9 @@
 package util;
 /**
- * Säilyttää ja jakaa eteenpäin Asetustilan antamat parametrit.
+ * Sailyttaa ja jakaa eteenpain Asetustilan antamat parametrit.
  * Kuten muissakin luokissa, 
- * ppmp == PikseliäPerMaastoPiste
- * @author Johannes
+ * ppmp == PikseliaPerMaastoPiste
+ * @author 290836
  */
 public class Parametrit {
 	
@@ -17,7 +17,7 @@ public class Parametrit {
 	 * @param tankkimaara	tankkien maara
 	 * @param ammustuho		ammuksen tuhovoima
 	 * @param minimivali	tankkien minimivali toisistaan
-	 * @param ppmp			pikseliä per maastopiste eli maaston vaihtelevuus
+	 * @param ppmp			pikselia per maastopiste eli maaston vaihtelevuus
 	 */
 	public Parametrit(int tankkimaara, int ammustuho, int minimivali, int ppmp) {
 		this.tankkimaara = tankkimaara;
@@ -51,7 +51,7 @@ public class Parametrit {
 	}
 	
 	/**
-	 * antaa pikseliä per maastopiste-arvon
+	 * antaa pikselia per maastopiste-arvon
 	 * @return	ppmp
 	 */
 	public int annaPikseliaPerMaastoPiste() {

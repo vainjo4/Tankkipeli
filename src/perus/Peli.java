@@ -6,53 +6,53 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import util.Musiikki;
 /**
- * Tämä on pelin pääluokka. TankWars käyttää Slick2d-kirjastoa ja sen 
+ * Tama on pelin paaluokka. TankWars kayttaa Slick2d-kirjastoa ja sen 
  * arkkitehtuuri perustuu Slickin StateBasedGame-luokkaan.
- * Pelissä on siis tiloja (GameState) joiden välillä 
+ * Pelissa on siis tiloja (GameState) joiden valilla 
  * voidaan liikkua helpoilla metodikutsuilla. Jokaisessa 
  * tilassa on keskeiset metodit init(), render() ja update().
  * 
- * init() on metodi, joka tekee sen mitä halutaan tehtäväksi 
- * ennen kuin tilaan mennään. Se on siis oikea paikka muuttujien 
- * alustamiselle ynnä muulle.
+ * init() on metodi, joka tekee sen mita halutaan tehtavaksi 
+ * ennen kuin tilaan mennaan. Se on siis oikea paikka muuttujien 
+ * alustamiselle ynna muulle.
  * 
- * render()-metodissa tehdään tilan vaatima piirtäminen.
+ * render()-metodissa tehdaan tilan vaatima piirtaminen.
  * 
- * update()-metodissa päivitetään pelin logiikka.
+ * update()-metodissa paivitetaan pelin logiikka.
  * 
  * 
- * Renderiä ja updatea kutsutaan pelisilmukassa toistuvasti. 
- * Renderiä kutsutaan joka framella eli ruudunpäivityksellä 
- * ja updatea jonkin verran tätä harvemmin tai useammin 
+ * Renderia ja updatea kutsutaan pelisilmukassa toistuvasti. 
+ * Renderia kutsutaan joka framella eli ruudunpaivityksella 
+ * ja updatea jonkin verran tata harvemmin tai useammin 
  * asetuksista riippuen.
  * 
  * 
- * Pelin yleisestä käyttölogiikasta & arkkitehtuurista:
+ * Pelin yleisesta kayttologiikasta & arkkitehtuurista:
  * 
  * Peli-luokan ajaminen luo GameStatet ja yhden appGameContainerin.
  * Slick ajaa kulissien takana tilaluokkien init()-metodit. 
- * Pelitila-luokassa tämä kutsu ei tee mitään. Syynä on Parametrit-luokan 
- * käyttö, lisää alla.
+ * Pelitila-luokassa tama kutsu ei tee mitaan. Syyna on Parametrit-luokan 
+ * kaytto, lisaa alla.
  * 
- * Pelistä aukeaa ensin Valikkotila: päävalikkonäkymä, jossa on 
+ * Pelista aukeaa ensin Valikkotila: paavalikkonakyma, jossa on 
  * Start- ja Quit-napit. Start-nappi vie Asetustilaan, jossa voidaan 
  * antaa pelille uusia parametreja.
  * 
- * Asetustilan OK-napin painaminen initialisoi Pelitilan niillä 
- * parametreilla, jotka tekstikentissä ja painonapissa (Fullscreen-checkbox) 
- * on näkyvillä. Pelitilan init() tehdään metodin luoJaLahetaParametrit() 
+ * Asetustilan OK-napin painaminen initialisoi Pelitilan niilla 
+ * parametreilla, jotka tekstikentissa ja painonapissa (Fullscreen-checkbox) 
+ * on nakyvilla. Pelitilan init() tehdaan metodin luoJaLahetaParametrit() 
  * kautta.
  * 
  * Fullscreen-vaihtoehdon muuttaminen eri kuin voimassaolevaksi 
- * ajaa kaikki init()-metodit uudestaan, sillä kuvien koordinaatit ym. 
- * logiikka määräytyvät ikkunan koon mukaan.
+ * ajaa kaikki init()-metodit uudestaan, silla kuvien koordinaatit ym. 
+ * logiikka maaraytyvat ikkunan koon mukaan.
  * 
- * Pelitilasta pääsee Pausetilaan painamalla esc-näppäintä. 
- * Pausetilasta pääsee joko jatkamaan peliä siitä mihin se jäi 
+ * Pelitilasta paasee Pausetilaan painamalla esc-nappainta. 
+ * Pausetilasta paasee joko jatkamaan pelia siita mihin se jai 
  * tai Valikkotilaan, jolloin pelitilanne pyyhkiytyy pois.
  * 
  * 
- * @author Johannes
+ * @author 290836
  *
  */
 public class Peli extends StateBasedGame {
@@ -103,11 +103,11 @@ public class Peli extends StateBasedGame {
 
 		AppGameContainer app = new AppGameContainer(new Peli());
 
-		//800*600, ei fullscreen(vielä tässä vaiheessa)
+		//800*600, ei fullscreen(viela tassa vaiheessa)
 		app.setDisplayMode(800, 600, false); 
 
-		//sopivannopeuksiselle pelin kululle kokeilemalla löydetyt luvut
-		//logiikanpäivitysten ero korkeintaan 25 ms, kohde fps 60
+		//sopivannopeuksiselle pelin kululle kokeilemalla loydetyt luvut
+		//logiikanpaivitysten ero korkeintaan 25 ms, kohde fps 60
 		app.setMaximumLogicUpdateInterval(25);
 		app.setTargetFrameRate(60);
 
@@ -121,6 +121,6 @@ public class Peli extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer app) throws SlickException {
-		//Tyhjä. Slick ajaa initit kulissien takana silti. 
+		//Tyhja. Slick ajaa initit kulissien takana silti. 
 	}
 }

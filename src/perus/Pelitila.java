@@ -17,8 +17,8 @@ import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- * GameState-luokka, joka hoitaa kaiken mitä itse pelissä (vs. valikoissa) tapahtuu.
- * @author Johannes
+ * GameState-luokka, joka hoitaa kaiken mita itse pelissa (vs. valikoissa) tapahtuu.
+ * @author 290836
  *
  */
 public class Pelitila extends BasicGameState {
@@ -90,14 +90,14 @@ public class Pelitila extends BasicGameState {
 			//vauriota tankille
 			vaunu.vaurioita(this.ammus.annaTuhovoima(), this);
 
-			//partikkelisysteemiräjähdys
+			//partikkelisysteemirajahdys
 			this.rajahdys(
 					this.ammus.annaX(),
 					this.ammus.annaY());
 		}
 		else if(mihinOsui == 2){
-			// ei tee mitään erityistä. 
-			// ehto tässä vain metodin loogisuuden vuoksi.
+			// ei tee mitaan erityista. 
+			// ehto tassa vain metodin loogisuuden vuoksi.
 		} 
 		else if(mihinOsui == 3) {
 
@@ -108,7 +108,7 @@ public class Pelitila extends BasicGameState {
 			this.muutaMaastoa(gc);
 			this.tiputaTankkeja();
 		}
-		//asiat jotka tehdään joka osumassa:
+		//asiat jotka tehdaan joka osumassa:
 
 		//soitetaan efekti
 		this.rajahdysaani.play();
@@ -143,7 +143,7 @@ public class Pelitila extends BasicGameState {
 		while (k < this.tankkimaara) {
 			Tankki vaunu = this.tankkitaulukko.annaTankki(k);
 			vaunu.asetaY(vaunu.laskeYmaastoon(this.maasto));
-			//uusitaan törmäysellipsit
+			//uusitaan tormaysellipsit
 			vaunu.asetaTormaysmalli(new Tankintormaysmalli(vaunu));
 			k++;
 		}
@@ -166,7 +166,7 @@ public class Pelitila extends BasicGameState {
 		this.ammusIlmassa = olemassako;
 	}
 	/**
-	 * Siirtää ja resetoi hiukkasefektin.
+	 * Siirtaa ja resetoi hiukkasefektin.
 	 * @param x	uusi x
 	 * @param y	uusi y
 	 */
@@ -191,26 +191,26 @@ public class Pelitila extends BasicGameState {
 			this.vuorossaindeksi = 0;
 		}
 
-		//jos vuorossaolija onkin jo tuhottu, siirretään seuraavalle
+		//jos vuorossaolija onkin jo tuhottu, siirretaan seuraavalle
 		if(this.tankkitaulukko.annaTankki(vuorossaindeksi).onkoTuhottu()) {
 			edistaVuoroa(gc);
 		}
 
-		//tehdään uusi tuulinuoli
+		//tehdaan uusi tuulinuoli
 		this.tuulinuoli = new Tuulinuoli(gc);
 	}
 
 	/**
-	 * Lisää tuhottujen tankkien laskuria.
+	 * Lisaa tuhottujen tankkien laskuria.
 	 */
 	public void lisaaTuhottujenLaskuria() {
 		this.tuhotutTankit++;
 	}
 
 	/**
-	 * Antaa voittamis-Stringin piirrettäväksi
+	 * Antaa voittamis-Stringin piirrettavaksi
 	 * @param voittajanNumero	monesko tankki voittaja on (eli indeksi+1).
-	 * @return	käyttökelpoinen String
+	 * @return	kayttokelpoinen String
 	 */
 	private String annaVoittoTeksti(int voittajanNumero) {
 		return "WINNER is TANK NUMBER "+ voittajanNumero +" !!!"+"\n"
@@ -218,10 +218,10 @@ public class Pelitila extends BasicGameState {
 	}
 
 	/**
-	 * Antaa ampumatiedoista Stringin piirrettäväksi
+	 * Antaa ampumatiedoista Stringin piirrettavaksi
 	 * @param tankkivuorossa	Tankki joka vuorossa 
 	 * @param moneskoTankki		tankin numero
-	 * @return tankin numero, piipun kulma ja lähtönopeus
+	 * @return tankin numero, piipun kulma ja lahtonopeus
 	 */
 	private String annaAmpumaTiedot(Tankki tankkivuorossa, int moneskoTankki) {
 		return "Tank "+ moneskoTankki +"\n" +"Shot power "+	tankkivuorossa
@@ -248,7 +248,7 @@ public class Pelitila extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame peli)
 			throws SlickException {
 
-		//estetään liian aikainen initti
+		//estetaan liian aikainen initti
 		if(this.parametrit == null) {
 			return;
 		}
@@ -259,13 +259,13 @@ public class Pelitila extends BasicGameState {
 		//alussa ammusta ei ole ilmassa
 		this.ammusOlemassa(false);
 
-		//tehdään tausta
+		//tehdaan tausta
 		this.tausta = new Tausta(gc);
 
-		//tehdään maasto, haetaan ppmp-parametri Parametri-oliolta
+		//tehdaan maasto, haetaan ppmp-parametri Parametri-oliolta
 		this.maasto = new Maasto(gc, this.parametrit.annaPikseliaPerMaastoPiste());
 
-		//maaston päälle tehdään kivikko
+		//maaston paalle tehdaan kivikko
 		this.kivikko = new Kivikko(gc, this.maasto);
 
 		//kivikon mukaan lopullinen maasto
@@ -274,14 +274,14 @@ public class Pelitila extends BasicGameState {
 		//haetaan tankkiparametri Parametri-oliolta
 		this.tankkimaara = this.parametrit.annaTankkimaara();
 
-		//tehdään tankkitaulukko
+		//tehdaan tankkitaulukko
 		this.tankkitaulukko = new Tankkitaulukko(gc, this,
 				tankkimaara, this.parametrit.annaMinimivali());
 
-		//tehdään ammuksen "kuva"
+		//tehdaan ammuksen "kuva"
 		this.ammuksenKuva = new Circle(0,0,2);
 
-		//tehdään tuulinuoli
+		//tehdaan tuulinuoli
 		this.tuulinuoli = new Tuulinuoli(gc);
 
 		//vuorot alkavat 1. tankista
@@ -298,7 +298,7 @@ public class Pelitila extends BasicGameState {
 		if(this.hiukkaset == null) {
 			this.hiukkaset = new Hiukkaset();
 		}
-		//haetaan räjähdyksen ParticleSystem
+		//haetaan rajahdyksen ParticleSystem
 		if(this.hiukkasRajahdys == null) {
 			this.hiukkasRajahdys = this.hiukkaset.annaRajahdys();
 			hiukkasRajahdys.setVisible(false);
@@ -314,14 +314,14 @@ public class Pelitila extends BasicGameState {
 
 		int monesko = this.vuorossaindeksi + 1;
 
-		//täytetään tausta gradientfillillä
+		//taytetaan tausta gradientfillilla
 		g.fill(this.tausta, this.tausta.annaTaustanGradient());
 
-		//täytetään maasto gradientfillillä
+		//taytetaan maasto gradientfillilla
 		if(this.maasto instanceof Maasto) {
 			g.fill(this.maasto, ((Maasto) this.maasto).annaMaastonGradient());
 		}
-		//piirretään tuulinuoli ja teksti, jos on olemassa
+		//piirretaan tuulinuoli ja teksti, jos on olemassa
 		if(this.tuulinuoli != null) {
 			g.fill(this.tuulinuoli);
 
@@ -330,13 +330,13 @@ public class Pelitila extends BasicGameState {
 					this.tuulinuoli.annaY()+30);
 		}
 
-		//vuorossaolija- ja lähtönopeus-Stringin piirto
+		//vuorossaolija- ja lahtonopeus-Stringin piirto
 		g.drawString(annaAmpumaTiedot(tankkivuorossa, monesko), 20, 10);
 
-		//piiretään hitpoint-taulukon otsikko
+		//piiretaan hitpoint-taulukon otsikko
 		g.drawString("Hitpoints:", gc.getWidth()-180, 10);
 
-		//jos ammus on ilmassa, päivitetään ja piirretään ammuksenKuva
+		//jos ammus on ilmassa, paivitetaan ja piirretaan ammuksenKuva
 		if(onkoAmmusIlmassa()) {
 
 			this.ammuksenKuva.setCenterX(this.ammus.annaX());
@@ -346,7 +346,7 @@ public class Pelitila extends BasicGameState {
 
 
 
-		//piirretään vaunut ja piiput, jos ei tuhottuna
+		//piirretaan vaunut ja piiput, jos ei tuhottuna
 		int i = 0;
 		Tankki vaunu = null;
 		Piippu piippu = null;
@@ -354,17 +354,17 @@ public class Pelitila extends BasicGameState {
 			vaunu = this.tankkitaulukko.annaTankki(i);
 			piippu = vaunu.annaPiippu();
 
-			//piiretään hitpoint-taulukon rivit
+			//piiretaan hitpoint-taulukon rivit
 			monesko = i+1;
 			g.drawString("Tank "+monesko+" "+
 					vaunu.annaKunto() + "%", gc.getWidth()-150, 30+i*20);
 
 			if(!vaunu.onkoTuhottu()) {
 
-				//vaunun numero piirretään sen viereen
+				//vaunun numero piirretaan sen viereen
 				g.drawString(monesko+"", vaunu.annaX()-3, vaunu.annaY());
 
-				//vaunut ja piiput piirretään omille paikoilleen
+				//vaunut ja piiput piirretaan omille paikoilleen
 				g.drawImage(vaunu, 
 						vaunu.annaX()-(vaunu.getWidth()/2), 
 						vaunu.annaY()-vaunu.getHeight());
@@ -375,16 +375,16 @@ public class Pelitila extends BasicGameState {
 			i++;
 		}
 
-		//jos vain 1 tankki jäljellä, piirretään voitonhuudahdus
+		//jos vain 1 tankki jaljella, piirretaan voitonhuudahdus
 		if(this.tuhotutTankit == this.tankkimaara-1) {
 			g.drawString(this.annaVoittoTeksti(this.vuorossaindeksi+1),
 					gc.getWidth()/2-150, gc.getHeight()/2-100);
 		}
 
-		//räjähdyksen piirto
+		//rajahdyksen piirto
 		this.hiukkasRajahdys.render();
 
-		//	vuorossa olijan törmäysellipsin piirto
+		//	vuorossa olijan tormaysellipsin piirto
 		//	g.draw(this.tankkitaulukko.annaTankki(vuorossaindeksi).annaTormaysmalli());
 	}
 
@@ -394,7 +394,7 @@ public class Pelitila extends BasicGameState {
 
 		Input input = gc.getInput();
 
-		//räjähdyksen päivitys
+		//rajahdyksen paivitys
 		this.hiukkasRajahdys.update(delta);
 
 		//jos ammus on ilmassa
@@ -404,10 +404,10 @@ public class Pelitila extends BasicGameState {
 			 * Tankkiinosumissetti.
 			 *
 			 * Logiikka:
-			 * käydään taulukko läpi
-			 * jos tankkitaulun tankin ellipsi sisältää ammuksen koordit
+			 * kaydaan taulukko lapi
+			 * jos tankkitaulun tankin ellipsi sisaltaa ammuksen koordit
 			 * ja se ei ole ammuksen ampuja
-			 * ja se on ehjä
+			 * ja se on ehja
 			 * ->
 			 * vauriota tankille, tuhotaan ammus.
 			 * 
@@ -447,7 +447,7 @@ public class Pelitila extends BasicGameState {
 				return;
 			}
 
-			//Muuten ammus lentää.
+			//Muuten ammus lentaa.
 			this.ammus.lenna(
 					this.ammus.annaX(), 
 					this.ammus.annaY(), 
@@ -455,7 +455,7 @@ public class Pelitila extends BasicGameState {
 		}
 		//onkoammusilmassa-lohkon loppu
 
-		// escillä pääsee pause-valikkoon ammuksesta riippumatta
+		// escilla paasee pause-valikkoon ammuksesta riippumatta
 		if(input.isKeyDown(Input.KEY_ESCAPE)) {
 			GameState pause = peli.getState(Peli.PAUSETILA);
 			if(pause instanceof Pausetila) {
@@ -467,9 +467,9 @@ public class Pelitila extends BasicGameState {
 
 		/*
 		 * jos ammusta ei ole ilmassa:
-		 * nuolinäppäimillä säädetään kulmaa ja lähtönopeutta
-		 * enterillä ammutaan
-		 * shiftillä saadaan rotaatioon ja nopeuden säätöön nopeutta
+		 * nuolinappaimilla saadetaan kulmaa ja lahtonopeutta
+		 * enterilla ammutaan
+		 * shiftilla saadaan rotaatioon ja nopeuden saatoon nopeutta
 		 */
 		if(!onkoAmmusIlmassa()) {
 
@@ -479,8 +479,8 @@ public class Pelitila extends BasicGameState {
 
 			if(input.isKeyDown(Input.KEY_RSHIFT) 
 					|| input.isKeyDown(Input.KEY_LSHIFT)) {
-				//shiftin pohjassa pitäminen 10-kertaistaa 
-				//kaikkien säätöjen säätöaskelen
+				//shiftin pohjassa pitaminen 10-kertaistaa 
+				//kaikkien saatojen saatoaskelen
 				shift = 10;
 			}
 

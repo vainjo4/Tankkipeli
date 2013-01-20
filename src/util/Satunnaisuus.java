@@ -5,7 +5,7 @@ import org.newdawn.slick.GameContainer;
 
 /**
  * Staattinen luokka, jossa pelin tarvitsemaa satunnaisuutta
- * @author Johannes
+ * @author 290836
  *
  */
 public class Satunnaisuus {
@@ -22,7 +22,7 @@ public class Satunnaisuus {
 	}
 	
 	/**
-	 * Arpoo ikkunan leveyttä pienemmän luvun
+	 * Arpoo ikkunan leveytta pienemman luvun
 	 * @param gc	pelin GameContainer
 	 * @return satunnaisluku
 	 */

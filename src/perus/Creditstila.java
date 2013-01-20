@@ -15,8 +15,8 @@ import org.newdawn.slick.util.ResourceLoader;
 import aktiivit.Tankki;
 
 /**
- * GameState-luokka Credits-näkymää varten.
- * @author Johannes
+ * GameState-luokka Credits-nakymaa varten.
+ * @author 290836
  *
  */
 public class Creditstila extends BasicGameState {
@@ -49,7 +49,7 @@ public class Creditstila extends BasicGameState {
 		this.nappix = gc.getWidth()/2-nappi.getWidth()/2;
 		this.nappiy = gc.getHeight()-nappi.getHeight()-30;
 		
-		//napin hiirineliö
+		//napin hiirinelio
 		this.nappinelio = new Rectangle(
 				nappix, 
 				nappiy, 
@@ -59,7 +59,7 @@ public class Creditstila extends BasicGameState {
 		//tankiksi koristetankki
 		this.tankki = new Tankki(gc);
 		
-		//tausta kuten yleensä
+		//tausta kuten yleensa
 		this.tausta = new Tausta(gc);
 	}
 
@@ -68,10 +68,10 @@ public class Creditstila extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame peli, Graphics g)
 			throws SlickException {
 
-		//piirretään tausta
+		//piirretaan tausta
 		g.fill(this.tausta, this.tausta.annaTaustanGradient());
 		
-		//piirretään tankki
+		//piirretaan tankki
 		g.drawImage(this.tankki, 
 				this.tankki.annaX()-(this.tankki.getWidth()/2), 
 				this.tankki.annaY()-this.tankki.getHeight());
@@ -117,7 +117,7 @@ public class Creditstila extends BasicGameState {
 				"Music and sounds used under \n"+
 				"Creative Commons Attribution 3.0.\n" +
 				"\n" +
-				"everything else by Johannes Vainio";
+				"everything else by 290836";
 	}
 
 	@Override

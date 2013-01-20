@@ -17,8 +17,8 @@ import aktiivit.Tankki;
 import util.Satunnaisuus;
 
 /**
- * GameState-luokka päävalikkoa varten.
- * @author Johannes
+ * GameState-luokka paavalikkoa varten.
+ * @author 290836
  *
  */
 public class Valikkotila extends BasicGameState {
@@ -44,7 +44,7 @@ public class Valikkotila extends BasicGameState {
 	private Image otsikko;
 
 	/**
-	 * nappien neliöt
+	 * nappien neliot
 	 */
 	private Rectangle aloitanelio;
 	private Rectangle creditsnelio;
@@ -88,7 +88,7 @@ public class Valikkotila extends BasicGameState {
 		creditsy = gc.getHeight()/2+this.napinkorkeus/2;
 		lopetay = gc.getHeight()/2+this.napinkorkeus/2*3;
 
-		//hiirentarkkailuneliöt
+		//hiirentarkkailuneliot
 		this.aloitanelio = new Rectangle(
 				this.valikonx, 
 				this.aloitay, 
@@ -108,7 +108,7 @@ public class Valikkotila extends BasicGameState {
 				this.napinleveys, 
 				this.napinkorkeus);
 
-		//tehdään maisemaksi satunnainen maasto
+		//tehdaan maisemaksi satunnainen maasto
 		this.maasto = new Maasto(gc, Satunnaisuus.annaInt(10)+10);
 
 		//normaali tausta
@@ -125,16 +125,16 @@ public class Valikkotila extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame peli, Graphics g)
 			throws SlickException {
 
-		//piirretään taustat ja maastot
+		//piirretaan taustat ja maastot
 		g.fill(this.tausta, this.tausta.annaTaustanGradient());
 		g.fill(this.maasto, this.maasto.annaMaastonGradient());
 
-		//piirretään napit
+		//piirretaan napit
 		g.drawImage(this.aloitanappi, valikonx, aloitay);
 		g.drawImage(this.creditsnappi, valikonx, creditsy);
 		g.drawImage(this.lopetanappi, valikonx, lopetay);
 
-		//piirretään otsikko ja koristetankki
+		//piirretaan otsikko ja koristetankki
 		this.otsikko.drawCentered(gc.getWidth()/2, gc.getHeight()/6);
 
 		g.drawImage(this.tankki, this.tankki.annaX()-(this.tankki.getWidth()/2), 

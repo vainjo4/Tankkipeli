@@ -3,8 +3,8 @@ package maisema;
 import org.newdawn.slick.geom.Rectangle;
 
 /**
- * Neliön alaluokka jota käytetään Kivikossa.
- * @author Johannes
+ * Nelion alaluokka jota kaytetaan Kivikossa.
+ * @author 290836
  *
  */
 @SuppressWarnings("serial")

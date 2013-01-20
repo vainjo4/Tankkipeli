@@ -9,7 +9,7 @@ import util.Satunnaisuus;
 
 /**
  * Monikulmion alaluokka, joka on maaston graafinen esitys.
- * @author Johannes
+ * @author 290836
  *
  */
 @SuppressWarnings("serial")
@@ -18,7 +18,7 @@ public class Maasto extends Polygon {
 	private GradientFill maastoGradient;
 
 	/**
-	 * konstruktori, jota käytetään satunnaislukutaulukon kanssa luomaan "esimaasto"
+	 * konstruktori, jota kaytetaan satunnaislukutaulukon kanssa luomaan "esimaasto"
 	 * @param gc	pelin GameContainer
 	 * @param pikseliaPerMaastoPiste
 	 */
@@ -40,7 +40,7 @@ public class Maasto extends Polygon {
 		this.addPoint(ikkunanleveys, ikkunankorkeus);
 		this.addPoint(0, ikkunankorkeus);
 		
-		//System.out.println("maastossa pisteitä " + this.getPointCount());
+		//System.out.println("maastossa pisteita " + this.getPointCount());
 
 		if(this.maastoGradient == null) {
 			teeGradient(gc);
@@ -74,7 +74,7 @@ public class Maasto extends Polygon {
 		}
 	}
 	/**
-	 * alustaa maastojen käyttämän GradientFillin
+	 * alustaa maastojen kayttaman GradientFillin
 	 * @param gc	pelin GameContainer
 	 */
 	private void teeGradient(GameContainer gc) {

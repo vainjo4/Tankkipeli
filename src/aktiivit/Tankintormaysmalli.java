@@ -2,9 +2,9 @@ package aktiivit;
 import org.newdawn.slick.geom.Ellipse;
 
 /**
- * Ellipsin alaluokka. Tankintörmäysmallia käytetään hyväksi 
- * ammuksen ja tankin välisessä törmäyksentunnistuksessa.
- * @author Johannes
+ * Ellipsin alaluokka. Tankintormaysmallia kaytetaan hyvaksi 
+ * ammuksen ja tankin valisessa tormayksentunnistuksessa.
+ * @author 290836
  *
  */
 @SuppressWarnings("serial")

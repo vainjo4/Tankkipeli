@@ -5,9 +5,9 @@ import org.newdawn.slick.fills.GradientFill;
 import org.newdawn.slick.geom.Rectangle;
 
 /**
- * Neliön alaluokka. Muodostaa peli-ikkunan kokoisen neliön. 
- * Taustan ja GradientFillin avulla peli piirtää taivaan.
- * @author Johannes
+ * Nelion alaluokka. Muodostaa peli-ikkunan kokoisen nelion. 
+ * Taustan ja GradientFillin avulla peli piirtaa taivaan.
+ * @author 290836
  *
  */
 @SuppressWarnings("serial")
@@ -27,7 +27,7 @@ public class Tausta extends Rectangle {
 				(gc.getWidth()/2), gc.getHeight(), new Color(180,180,200));
 	}
 	/**
-	 * Antaa taivaannäköisen gradientfillin
+	 * Antaa taivaannakoisen gradientfillin
 	 * @return taustan gradient
 	 */
 	public GradientFill annaTaustanGradient() {

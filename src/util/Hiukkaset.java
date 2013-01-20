@@ -6,8 +6,8 @@ import org.newdawn.slick.particles.ParticleIO;
 import org.newdawn.slick.particles.ParticleSystem;
 
 /**
- * Luokka, joka huolehtii ParticleEmittereistä
- * @author Johannes
+ * Luokka, joka huolehtii ParticleEmittereista
+ * @author 290836
  * 
  */
 public class Hiukkaset {
@@ -27,7 +27,7 @@ public class Hiukkaset {
 	}
 	/**
 	 * Antaa efektin
-	 * @return	räjähdysefekti
+	 * @return	rajahdysefekti
 	 */
 	public ParticleSystem annaRajahdys() {
 		return this.rajahdys;
